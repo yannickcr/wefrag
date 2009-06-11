@@ -1,0 +1,7 @@
+<% render(:layout => 'posts/layout', :locals => { :forum => @forum, :topic => @topic, :post => @post }) do %>
+  <%= error_messages_for :post %>
+
+  <% form_for @post, :url => forum_topic_post_path(@forum, @topic, @post), :html => { :method => :put } do |f| %>
+    <%= render :partial => 'posts/form', :locals => { :f => f, :post => @post, :button => 'Modifier' } %>
+  <% end %>
+<% end %>

@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%= h(@page_title || 'Wefrag forums') %></title>
+  <%= styles_and_scripts %>
+  <% if @has_feed -%>
+  <%= auto_discovery_link_tag :rss, :format => :rss %>
+  <%= auto_discovery_link_tag :atom, :format => :atom %>
+  <% end -%>
+  <%= yield :headers %>
+</head>
+<body>
+
+<%= flash_messages %>
+<%= yield %>
+
+<script type="text/javascript">
+var gaJsHost = (('https:' == document.location.protocol) ? 'https://ssl.' : 'http://www.');
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker('UA-81336-4'); pageTracker._initData(); pageTracker._trackPageview();
+</script>
+
+</body>
+</html>

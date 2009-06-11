@@ -1,0 +1,11 @@
+log/*
+tmp/*
+config/database.yml
+config/config.yml
+config/ultrasphinx/development.conf
+config/ultrasphinx/test.conf
+config/ultrasphinx/production.conf
+public/medias/images/*
+public/medias/images
+public/javascripts/all.js
+public/stylesheets/all.css

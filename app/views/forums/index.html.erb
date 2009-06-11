@@ -1,0 +1,40 @@
+<div class="header span-24">
+  <div class="span-4">
+    <%= breadcrumb %>
+  </div>
+  <div class="actions span-20 last">
+    <%= forums_actions current_user %>
+  </div>
+</div>
+
+<div class="span-24">
+  <div class="span-16">
+    <table class="list forums">
+    <% @categories.each do |category| %>
+      <tr class="category">
+        <th colspan="3" class="title">
+          <%= h category %>
+        </th>
+      </tr>
+      <%= render :partial => category.forums %>
+    <% end %>
+    </table>
+  </div>
+  <div class="span-8 last">
+  <% if is_user_active? %>
+    <%= show_shouts_box %>
+  <% else %>
+    &nbsp;
+  <% end %>
+  </div>
+  <div class="span-24">
+    <div class="warning">
+      <ul>
+        <li>Aucune insulte ne sera tolérée.</li>
+        <li>Le warez, les incitations au piratage, la pornographie et le racisme sont interdits.</li>
+        <li>Respectez les goûts et les opinions des autres, en particulier sur le forum Partage où la polémique n’est pas la bienvenue.</li>
+        <li>Vous êtes fortement encouragé à modérer les threads dont vous êtes le modérateur.</li>
+      </ul>
+    </div>
+  </div>
+</div>

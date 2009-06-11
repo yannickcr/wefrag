@@ -1,0 +1,14 @@
+<div class="header span-24">
+  <div class="span-14">
+    <%= breadcrumb @forum, @topic %>
+  </div>
+  <div class="actions span-10 last">
+    <%= link_to 'Annuler', @forum %>
+  </div>
+</div>
+
+<%= error_messages_for :topic %>
+
+<% form_for @topic, :url => forum_topics_path(@forum), :html => { :method => :post } do |f| %>
+   <%= render :partial => 'topics/form', :locals => { :f => f, :topic => @topic, :button => 'Créer le sujet' } %>
+<% end %>

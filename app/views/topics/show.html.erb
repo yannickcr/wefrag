@@ -1,0 +1,19 @@
+<% render(:layout => 'topics/layout', :locals => { :forum => @forum, :topic => @topic  }) do %>
+<div class="pager span-12 prepend-12">
+  <%= pager = will_paginate @posts %>
+</div>
+
+<div class="span-24">
+<table class="list posts">
+  <tr>
+    <th class="author span-4">Auteur</th>
+    <th class="post span-20 last">Message</th>
+  </tr>
+  <%= render :partial => @posts, :locals => { :forum => @forum, :topic => @topic, :action_class => 'actions' } %>
+</table>
+</div>
+
+<div class="pager span-12 prepend-12">
+  <%= pager %>
+</div>
+<% end %>

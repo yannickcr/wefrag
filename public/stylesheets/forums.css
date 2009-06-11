@@ -1,0 +1,567 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    background-color: #eee;
+    color: #000;
+}
+
+a
+{
+    color: #c30;
+    text-decoration: none;
+}
+
+a:hover
+{
+    color: #333;
+    text-decoration: underline;
+}
+
+input.text,
+input.submit,
+select
+{
+    margin: 0 0 0.5em 0;
+}
+
+table
+{
+    margin-bottom: 0.5em;
+    border-collapse: collapse;
+}
+
+td
+{
+    vertical-align: middle;
+}
+
+th
+{
+    color: #444;
+    text-align: center;
+    vertical-align: middle;
+}
+
+tr.even td
+{
+    background-color: #fff;
+}
+
+div#page
+{
+    margin: 0 auto;
+    width: 970px;
+}
+
+div#header
+{
+    margin-bottom: 10px;
+}
+
+div#body
+{
+    padding: 10px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+div#flash
+{
+    font-weight: bold;
+}
+
+table.list th
+{
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 1.25;
+    background-color: #eee;
+}
+
+table.list th.title,
+table.list th.author
+{
+    text-align: left;
+}
+
+table.list td.by,
+table.list td.replies,
+table.list td.forum
+{
+    text-align: center;
+}
+
+table.list,
+table.list th,
+table.list td
+{
+    border: solid #ddd;
+    border-width: 1px 1px 0 0;
+}
+
+table.list
+{
+    border-width: 0 0 1px 1px;
+}
+
+table.list td.by,
+table.list td.last_post,
+table.list td.icon
+{
+    background-color: #f5f5f5; 
+}
+
+table.list td.icon
+{
+    background-image: url(../images/forum/read.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: #f5f5f5;
+    text-indent: -9999em;
+}
+
+table.topics td.actions
+{
+    background: url(../images/famfamfam/tag_orange.png) no-repeat center center;
+    color: #f5f5f5;
+    border-left: none;
+    text-indent: -9999em;
+    padding-left: 7px;
+    padding-right: 8px;
+}
+
+table.list tr.locked td.icon
+{
+    background-image: url(../images/forum/locked_read.gif);
+}
+
+table.list tr.unread td.icon
+{
+    background-image: url(../images/forum/unread.gif);
+}
+
+table.list tr.locked_unread td.icon
+{
+    background-image: url(../images/forum/locked_unread.gif);
+}
+
+table.list tr.disabled td.icon
+{
+    background-image: url(../images/forum/disabled.gif);
+}
+
+table.forums div.title
+{
+    color: #999;
+    font-size: 1.4em;
+    line-height: 1.2;
+    font-weight: bold;
+}
+
+table.forums div.title span.info
+{
+    font-size: 0.8em;
+}
+
+table.forums div.description
+{
+    color: #999;
+    font-size: 1.2em;
+    line-height: 1.2;
+    margin-bottom: 0.2em;
+}
+
+table.forums tr.disabled div.description
+{
+    color: #bbb;
+}
+
+table.forums div.last_post
+{
+    color: #555;
+}
+
+table.forums div.last_post span.user
+{
+    font-weight: bold; 
+}
+
+table.forums td,
+table.topics td
+{
+    vertical-align: middle;
+}
+
+table.topics td.title
+{
+    line-height: 1.25;
+    border-right: none;
+}
+
+table.topics td.title div.title
+{
+    font-size: 1.2em; 
+    overflow: hidden;
+}
+
+table.topics td.title a.unread_post
+{
+    background-image: url(../images/famfamfam/new.gif);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    width: 20px;
+    height: 16;
+    text-indent: -9999em;
+    display: block;
+    float: right;
+}
+
+table.topics td.title div.pages a
+{
+    background-image: url(../images/forum/page.gif);
+    background-repeat: no-repeat;
+    background-position: 3px 1px;
+    padding: 0 2px 0 15px;
+}
+
+table.topics div.by
+{
+    overflow: hidden;
+}
+
+table.posts tr.even td
+{
+    background-color: #fafafa;
+}
+
+table.posts td.content
+{
+    overflow: hidden;
+}
+
+table.posts td.info,
+table.posts td.content
+{
+    vertical-align: top;
+}
+
+table.posts td.info div.user
+{
+    font-size: 1.2em;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+table.posts td.info div.group
+{
+    font-size: 0.9em;
+}
+
+table.posts td.content div.body,
+table.posts td.content div.info
+{
+    margin: 0.3em 1em 0.5em 0.5em;
+}
+
+table.posts tr.unread td.info
+{
+    background-image: url(../images/famfamfam/new.gif);
+    background-position: 130px 5px;
+    background-repeat: no-repeat;
+}
+
+table.posts td.content div.info
+{
+    float: right;
+    margin-bottom: 0;
+    font-size: 0.9em;
+}
+
+div.post_preview
+{
+    padding: 1em;
+}
+
+table.posts td.content div.body
+{
+    font-size: 1.1em;
+    overflow: hidden;
+    width: 750px;
+}
+
+div.post_preview div.body p img,
+table.posts td.content div.body p img
+{
+    float: none;
+}
+
+table.posts td.content div.body blockquote
+{
+    margin-top: 0;
+}
+
+table.posts td.content div.info div.actions
+{
+    display: inline;
+}
+
+table.posts td.content div.info div.actions a
+{
+    margin-right: 0.3em;
+}
+
+table.posts td.content div.info div.date
+{
+    display: inline;
+    text-align: right;
+}
+
+div.header,
+div.footer
+{
+    color: #444;
+    background-color: #eee;
+    border-bottom: 1px solid #ddd;
+    line-height: 2;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    margin-bottom: 0.5em;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+div.header div.breadcrumb,
+div.footer div.breadcrumb
+{
+    padding: 0.25em 0 0.25em 1em;
+    line-height: 1.5;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+div.header div.actions a,
+div.footer div.actions a
+{
+    display: block;
+    float: right;
+    line-height: 2;
+    margin-right: 1px;
+    padding: 0 2em;
+    background-color: #ddd;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+div.header div.actions a:hover,
+div.footer div.actions a:hover
+{
+  background-color: #bbb;
+  color: #444;
+}
+
+div.header div.actions a.user,
+div.footer div.actions a.user
+{
+    background-image: url(../images/famfamfam/user.gif);
+    background-repeat: no-repeat;
+    background-position: 1em 50%;
+    padding-left: 2.75em;
+}
+
+div.header div.actions a.locked,
+div.footer div.actions a.locked,
+div.header div.actions a.unlocked,
+div.footer div.actions a.unlocked,
+div.header div.actions a.sticky,
+div.footer div.actions a.sticky,
+div.header div.actions a.unsticky,
+div.footer div.actions a.unsticky
+{
+    background-repeat: no-repeat;
+    background-position: 50%;
+    padding: 0 1.5em;
+    text-indent: -9999em;
+}
+
+div.header div.actions a.locked,
+div.footer div.actions a.locked
+{
+    background-image: url(../images/famfamfam/lock.png);
+}
+
+div.header div.actions a.unlocked,
+div.footer div.actions a.unlocked
+{
+    background-image: url(../images/famfamfam/lock_open.png);
+}
+
+div.header div.actions a.sticky,
+div.footer div.actions a.sticky
+{
+    background-image: url(../images/forum/sticky.png);
+}
+
+div.header div.actions a.unsticky,
+div.footer div.actions a.unsticky
+{
+    background-image: url(../images/forum/unsticky.png);
+}
+
+div.header div.actions a.read,
+div.footer div.actions a.read
+{
+    background-image: url(../images/famfamfam/eye.png);
+    background-repeat: no-repeat;
+    background-position: 1em 50%;
+    padding-left: 2.75em;
+}
+
+div.pager div.pagination
+{
+    font-size: 0.9em;
+    margin: 0 0 0.5em 0;
+    text-align: right;
+}
+
+div.pager a,
+div.pager span.current,
+div.pager span.disabled
+{
+    color: #999;
+    border: 1px solid #ddd;
+    margin: 0 0 0 0.2em;
+    padding: 0.2em 0.4em 0.2em 0.4em
+}
+
+div.pager a:hover,
+div.pager a:active
+{
+  color: #000;
+  border-color: #bbb;
+}
+
+div.pager span.current
+{
+  color: #fff;
+  background-color: #bbb;
+  border-color: #bbb;
+}
+
+div.pager span.disabled
+{
+  color: #ddd;
+  border-color: #eee;
+}
+
+div.warning
+{
+    color: #555;
+    background-color: #eee;
+    border-bottom: 1px solid #ddd;
+    margin: 1em 0;
+    padding: 1em 1em 0.1em 1em;
+}
+
+div.warning h4
+{
+    color: #000;
+    margin-bottom: 0.3em;
+}
+
+div.warning strong
+{
+    color: #444;
+}
+
+form.edit_user div.info
+{
+    margin: 0.7em 0 0.3em 0;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+div.search input.submit
+{
+    border: 1px solid #aaa;
+    padding: 4px;
+    margin: 0.5em;
+}
+
+#modalOverlay
+{
+  background-color:#000;
+  cursor:wait;
+}
+
+#modalContainer
+{
+  width:550px;
+  left:50%;
+  top:15%;
+  margin-left:-300px;
+  background-color:#fff;
+  border:3px solid #ccc;
+  padding: 10px 10px 30px 10px;
+  text-align: left;
+}
+
+
+#modalContainer a.modalCloseImg
+{
+  background:url(../images/famfamfam/cancel.png) no-repeat;
+  width:25px;
+  height:29px;
+  display:inline;
+  z-index:3200;
+  position:absolute;
+  top:-14px;
+  right:-18px;
+  cursor:pointer;
+}
+
+div.steam_id
+{
+    background: url(../images/icons/steam.gif) no-repeat;
+    padding-left: 20px;
+}
+
+div.xboxlive_id
+{
+    background: url(../images/icons/xboxlive.gif) no-repeat;
+    padding-left: 20px;
+}
+
+form.loading
+{
+    background: url(../images/icons/loading.gif) no-repeat right top;
+}
+
+#shouts
+{
+    border: 1px solid #ddd;
+}
+
+#shouts div.title
+{
+    background: #eee;
+    color: #444;
+    font-weight: bold;
+    line-height: 1.25;
+    font-size: 1em;
+    padding: 4px 10px 4px 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+#shouts div.content
+{
+    background: #f5f5f5;
+    padding: 0.5em;
+    overflow: hidden;
+}
+
+#shouts form
+{
+    margin-bottom: 0.5em;
+}
+

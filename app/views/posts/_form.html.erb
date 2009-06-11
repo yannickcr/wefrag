@@ -1,0 +1,36 @@
+<div class="span-24">
+
+<div class="span-4">
+  De :
+</div>
+<div class="span-20 last">
+  <%= h(post.user || current_user) %>
+</div>
+<div class="span-4">
+  Message :
+</div>
+<div class="span-20 last">
+  <%= f.text_area :body, :class => :markitup %>
+</div>
+<div class="prepend-4 span-20 last">
+  <%= f.submit button, :class => :submit %>
+</div>
+
+<div class="header span-24">
+  Les 25 derniers messages :
+</div>
+
+<div class="span-24">
+<table class="list posts">
+  <tr>
+    <th class="author span-4">Auteur</th>
+    <th class="post span-20 last">Message</th>
+  </tr>
+  <%= render :partial => @posts, :locals => { :forum => @forum, :topic => @topic, :action_class => 'hide' } %>
+</table>
+</div>
+
+
+
+
+</div>

@@ -1,0 +1,43 @@
+<div class="header">
+  <%= breadcrumb nil, nil, nil, 'OpenID' %>
+</div>
+
+<% if request.post? %>
+  <div class="errorExplanation">
+    <% if @user %>
+      Compte non activé ou mot de passe incorrect
+    <% else %>
+      Identifiant ou mot de passe incorrect
+    <% end %>
+  </div>
+<% end %>
+
+<p>Acceptez-vous de confirmer votre identité pour le site
+<strong>&laquo; <%= link_to h(@req.trust_root), @req.trust_root %> &raquo;</strong> ?</p>
+
+<% form_tag openid_decide_path(:req => params[:req]) do %>
+  <div class="span-4">
+    Identifiant :
+  </div>
+  <div class="last">
+    <% if @user %>
+      <%= h @user.login %>
+    <% else %>
+      <%= text_field_tag :login, h(params[:login]), :class => :text %>
+      (<%= link_to 'ouvrir un compte', new_user_path %>)
+    <% end %>
+  </div>
+  <div class="span-4">
+    Mot de passe :
+  </div>
+  <div class="last">
+    <%= password_field_tag :password, '', :class => :text %>
+    (Rester identifié sur wefrag.com ?
+    <%= check_box_tag :remember_me, '1', !request.post? || params[:remember_me] == '1' %>)
+  </div>
+  <div class="prepend-4 last">
+    <%= submit_tag 'Oui', :class => :submit %>
+    <%= submit_tag 'Non', :class => :submit, :name => :refuse %>
+  </div>
+<% end %>
+

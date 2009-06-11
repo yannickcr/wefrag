@@ -1,0 +1,5 @@
+<% shouts.each do |shout| %>
+<div class="msg">
+  <span class="time"><%= shout.created_at.to_s(:time) %></span>&nbsp;<strong><%= user_login shout.user %></strong>: <%= text_with_links shout.body %>
+</div>
+<% end %>

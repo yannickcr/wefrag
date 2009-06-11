@@ -1,0 +1,2 @@
+#!/bin/sh
+RAILS_ENV=production && /home/ced/wefrag/test/current/script/process/spawner -p 8001 -i 2

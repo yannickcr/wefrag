@@ -1,0 +1,35 @@
+<div class="header span-24">
+  <div class="span-24">
+    <%= breadcrumb nil, nil, nil, 'Inscription' %>
+  </div>
+</div>
+
+<div class="span-24">
+  <div class="warning">
+    <ul>
+      <li><strong>Le forum est réservé aux personnes majeures.</strong></li>
+      <li><strong>L'inscription n'est pas anonyme</strong> afin de responsabiliser les utilisateurs et d'empêcher les nuisibles de créer plusieurs comptes. Pour créer un compte, vous devez remplir le formulaire ci-dessous. Nous vous enverrons ensuite un email qui vous redirigera vers une page où vous devrez spécifiez votre nom et <strong>nous envoyer une photo de votre carte d’identité.</strong> La photo sera supprimée de notre serveur dès que votre compte aura été validé. <strong>Les seules données que nous conservons sont votre nom, votre prénom et votre date de naissance.</strong></li>
+      <li><strong>Le forum est 100% anonyme.</strong> Le fichier est déclaré à la CNIL et nous nous engageons à ne jamais utiliser les informations personnelles (email, nom, prénom, date de naissance et IP) que vous indiquez lors de votre inscription. Aucune de ces données ne pourra être consultée par un tiers. Vous serez uniquement identifié par votre pseudonyme.</li>
+    </ul>
+  </div>
+
+  <%= error_messages_for :user %>
+
+  <% form_for @user, :url => user_path, :html => { :method => :post } do |f| %>
+    <div class="span-4">
+      Identifiant :
+    </div>
+    <div class="span-20 last">
+      <%= f.text_field :login, :class => :text %>
+    </div>
+    <div class="span-4">
+      Adresse e-mail :
+    </div>
+    <div class="span-20 last">
+      <%= f.text_field :email, :class => :text %>
+    </div>
+    <div class="prepend-4 span-20 last">
+      <%= f.submit 'Créer', :class => :submit %>
+    </div>
+  <% end %>
+</div>

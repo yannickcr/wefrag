@@ -1,0 +1,57 @@
+<div class="header span-24">
+  <div class="span-24">
+    <%= breadcrumb nil, nil, nil, h(@user) %>
+  </div>
+</div>
+
+<div class="span-24">
+  <div class="span-14">
+    <div class="span-4">
+      Identifiant :
+    </div>
+    <div class="span-10 last">
+      <%= h_or_blank @user %>
+    </div>
+    <% if @user.has_email_alias? && is_user_active? %>
+      <div class="span-4">
+        Adresse e-mail :
+      </div>
+      <div class="span-10 last">
+        <%= mail_to @user.email_alias %>
+      </div>
+    <% end %>
+    <% if @user.info %>
+    <div class="span-4">
+      <div class="steam_id">
+        Steam ID :
+      </div>
+    </div>
+    <div class="span-10 last">
+      <%= link_to_if @user.info.steam_id, h_or_blank(@user.info.steam_id), "http://steamcommunity.com/id/#{h(@user.info.steam_id)}" %>
+    </div>
+    <div class="span-4">
+      <div class="xboxlive_id">
+        Xboxlive ID :
+      </div>
+    </div>
+    <div class="span-10 last">
+      <%= h_or_blank(@user.info.xboxlive_id) %>
+    </div>
+    <div class="span-4">
+      Psn ID :
+    </div>
+    <div class="span-10 last">
+      <%= h_or_blank(@user.info.psn_id) %>
+    </div>
+    <% end %>
+    <div class="span-14 last">
+      <%= link_to 'Voir tous ses messages', search_path("user:#{@user}") %>
+    </div>
+  </div>
+</div>
+
+<%- content_for :headers do -%>
+  <meta http-equiv="X-XRDS-Location" content="<%= show_user_formatted_url(@user, :format => 'xrds') %>" />
+  <link rel="openid.server" href="<%= openid_server_url %>" />
+  <link rel="openid2.provider" href="<%= openid_server_url %>" />
+<%- end -%>

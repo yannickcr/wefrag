@@ -1,0 +1,25 @@
+<div class="span-24">
+
+<div class="span-4">
+  De :
+</div>
+<div class="span-20 last">
+  <%= h(topic.user || current_user) %>
+</div>
+<div class="span-4">
+  Sujet :
+</div>
+<div class="span-20 last">
+  <%= f.text_field :title, :class => :text %>
+</div>
+<div class="span-4">
+  Message :
+</div>
+<div class="span-20 last">
+  <%= f.text_area :body, :class => :markitup %>
+</div>
+<div class="prepend-4 span-20 last">
+  <%= f.submit button, :class => :submit %>
+</div>
+
+</div>

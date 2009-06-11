@@ -1,0 +1,16 @@
+<h2>OPEN ID LOGIN</h2>
+
+<% form_tag session_path do -%>
+<p><label for="login">Login</label><br/>
+<%= text_field_tag 'login', username_from_openid %></p>
+
+<p><label for="password">Password</label><br/>
+<%= password_field_tag 'password' %></p>
+
+<p><%= submit_tag 'Log in' %></p>
+<% end -%>
+
+
+<hr />
+<%=h flash[:openid_params].inspect %>
+

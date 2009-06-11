@@ -1,0 +1,17 @@
+<div class="header span-24">
+<% menu = capture do %>
+  <div class="span-14">
+    <%= breadcrumb forum, topic, post %>
+  </div>
+  <div class="actions span-10 last">
+    <%= post_actions forum, topic, post, current_user %>
+  </div>
+<% end %>
+<%= menu %>
+</div>
+
+<%= yield %>
+
+<div class="footer span-24">
+<%= menu %>
+</div>

@@ -1,0 +1,48 @@
+.markItUpButton1 a
+{
+  background-image:url(../../../../images/markitup/bold.png);
+}
+
+.markItUpButton2 a
+{
+  background-image:url(../../../../images/markitup/italic.png);
+}
+.markItUpButton3 a
+{
+  background-image:url(../../../../images/markitup/underline.png);
+}
+
+.markItUpButton4 a
+{
+  background-image:url(../../../../images/markitup/picture.png);
+}
+.markItUpButton5 a
+{
+  background-image:url(../../../../images/markitup/link.png);
+}
+
+.markItUpButton8 a
+{
+  background-image:url(../../../../images/markitup/fonts.png);
+}
+
+.markItUpButton6 a
+{
+  background-image:url(../../../../images/markitup/quotes.png);
+}
+
+.markItUpButton7 a
+{
+  background-image:url(../../../../images/markitup/code.png);
+}
+
+.clean a
+{
+  background-image:url(../../../../images/markitup/clean.png);
+}
+
+.preview a
+{
+  background-image:url(../../../../images/markitup/preview.png);
+}
+

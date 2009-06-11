@@ -1,0 +1,20 @@
+<div class="header">
+  <%= breadcrumb nil, nil, nil, 'OpenID' %>
+</div>
+
+<p>Acceptez-vous de confirmer votre identité pour le site
+<strong>&laquo; <%= link_to h(@req.trust_root), @req.trust_root %> &raquo;</strong> ?</p>
+
+<% form_tag openid_decide_path(:req => params[:req]) do %>
+  <div class="span-4">
+    Identifiant :
+  </div>
+  <div class="last">
+    <%= h @user.login %>
+  </div>
+  <div class="prepend-4 last">
+    <%= submit_tag 'Oui', :class => :submit %>
+    <%= submit_tag 'Non', :class => :submit, :name => :refuse %>
+  </div>
+<% end %>
+

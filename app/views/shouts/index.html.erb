@@ -1,0 +1,23 @@
+<div class="header span-24">
+<% menu = capture do %>
+  <div class="span-24 last">
+    <%= breadcrumb %>
+  </div>
+<% end %>
+<%= menu %>
+</div>
+
+<div class="pager">
+  <%= pager = will_paginate @shouts %>
+</div>
+
+<%= render :partial => 'list', :locals => { :shouts => @shouts } %>
+
+<div class="pager">
+  <%= pager %>
+</div>
+
+<div class="footer span-24">
+<%= menu %>
+</div>
+

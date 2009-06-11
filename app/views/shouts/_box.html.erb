@@ -1,0 +1,14 @@
+<div id="shouts">
+  <div class="title">
+    <%= link_to 'Tribune', shouts_path %>
+  </div>
+  <div class="content">
+    <%= error_messages_for :shout %>
+    <% form_for :shout, :url => shouts_path do |f| %>
+      <%= f.text_field :body %>
+    <% end %>
+    <div class="list">
+      <%= render :partial => 'shouts/list', :locals => { :shouts => shouts } %>
+    </div>
+  </div>
+</div>

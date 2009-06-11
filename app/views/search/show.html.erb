@@ -1,0 +1,49 @@
+<% render(:layout => 'search/layout') do %>
+
+<% if @search and @search.total_entries > 0 %>
+
+<div class="pager span-12 prepend-12">
+  <%= pager = will_paginate @search %>
+</div>
+
+<div class="span-24">
+<table class="list topics">
+  <tr>
+    <th class="title span-14">Message</th>
+    <th class="by span-3">Par</th>
+    <th class="forum span-3">Forum</th>
+    <th class="date span-4 last">Date</th>
+  </tr>
+  <% @search.results.each do |post| %>
+  <tr>
+    <td class="title span-17">
+      <div class="title">
+        <%= link_to h(post.title), to_post_path(post.forum, post.topic, post) %>
+      </div>
+      <div class="body">
+        <%= format_text post.body %>
+      </div>
+    </td>
+    <td class="by span-3">
+      <%= user_login post.user %>
+    </td>
+    <td class="forum span-3">
+      <%= link_to h(post.forum), post.forum %>
+    </td>
+    <td class="date span-4 last">
+      <%= post_date post %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+</div>
+
+<div class="pager span-121212121212121212121212 prepend-12">
+  <%= pager %>
+</div>
+
+<% else %>
+  Aucun résultat.
+<% end %>
+
+<% end %>

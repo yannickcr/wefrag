@@ -1,0 +1,20 @@
+<% content_tag_for(:tr, post, :class => cycle(:odd, :even) + post_class(topic, post, current_user)) do %>
+  <td class="info span-4">
+    <div class="user">
+      <%= user_login post.user %>
+    </div>
+  </td>
+  <td class="content span-20 last">
+    <div class="body">
+      <%= format_text post.body %>
+    </div>
+    <div class="info">
+      <div class="<%= action_class %>">
+        <%= post_edit forum, topic, post, current_user %>
+      </div>
+      <div class="date">
+        <%= post.created_at.strftime('%d/%m/%Y à %Hh%M') %>
+      </div>
+    </div>
+  </td>
+<% end %>

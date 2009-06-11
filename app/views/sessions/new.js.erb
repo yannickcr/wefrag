@@ -1,0 +1,24 @@
+<div class="header">
+  <%= breadcrumb nil, nil, nil, 'Identification' %>
+</div>
+
+<%= content_tag(:div, 'Identifiant ou mot de passe incorrect', :class => :errorExplanation) if request.post? %>
+
+<% form_tag session_path do %>
+  <div class="span-4">
+    Identifiant :
+  </div>
+  <div class="last">
+    <%= text_field_tag :login, h(params[:login]), :class => :text %>
+  </div>
+  <div class="span-4">
+    Mot de passe :
+  </div>
+  <div class="last">
+    <%= password_field_tag :password, '', :class => :text %>
+  </div>
+  <div class="prepend-4 last">
+    <%= submit_tag 'Identifier', :class => :submit %>
+    <%= link_to 'Ouvrir un compte', new_user_path %>
+  </div>
+<% end %>

@@ -1,0 +1,27 @@
+development:
+  session:
+    secret:
+  openid:
+    secret:
+  memcache:
+    server:
+    namespace:
+
+test:
+  session:
+    secret:
+  openid:
+    secret:
+  memcache:
+    server:
+    namespace:
+
+production:
+  session:
+    secret:
+  openid:
+    secret:
+  memcache:
+    server:
+    namespace:
+

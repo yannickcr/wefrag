@@ -1,0 +1,17 @@
+<% content_tag_for(:tr, forum, :class => forum_icon(forum, current_user)) do %>
+  <td class="icon span-1">
+    Forum
+  </td>
+  <td class="span-15 last">
+    <div class="title">
+      <%= link_to_if can_read?(forum), h(forum), forum %>
+      <%= content_tag(:span, '(vous êtes modérateur des threads que vous créez)', :class => :info) if forum.can_topic_moderate?(current_user) %>
+    </div>
+    <div class="description">
+      <%= h forum.description %>
+    </div>
+    <div class="last_post">
+      <%= post_summary(forum.last_post) if can_read?(forum) && forum.last_post %>
+    </div>
+  </td>
+<% end %>

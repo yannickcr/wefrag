@@ -1,0 +1,9 @@
+<% form_for :topic, :url => move_forum_topic_path(@forum, @topic) do %>
+  <div class="span-4">
+    Déplacer vers le forum
+  </div>
+  <div class="last">
+    <%= select :topic, :forum_id, Forum.find(:all).collect { |f| [ f.title, f.id ] } %>
+    <%= submit_tag 'Enregistrer', :class => :submit %>
+  </div>
+<% end %>

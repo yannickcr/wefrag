@@ -1,0 +1,189 @@
+<div class="header span-24">
+  <div class="span-24">
+    <%= breadcrumb nil, nil, nil, h(@user) %>
+  </div>
+</div>
+
+<div class="span-24">
+  <% if @user.confirmed? %>
+  <div class="warning">
+    <% if @user.is_complete? %>
+    <h4>Votre profil est complet !</h4>
+    <p>Vous n'avez pas encore accès aux forums. Un administrateur doit activer votre compte.
+       Si vous souhaitez modifier une information relative à votre compte, faites-le dans le formulaire
+       ci-dessous puis cliquez sur le bouton « Enregistrer ». Sinon, vous pouvez fermer cette page :
+       vous recevrez un email dès que votre compte aura été validé.</p>
+    <% else %>
+    <h4>Votre profil n'est pas encore complet !</h4>
+    <p>Vous n'avez pas encore accès aux forums. Un administrateur doit activer votre compte.
+       Pour cela, vous devez nous communiquer les informations ci-dessous. Si vous ne le faites pas,
+       votre compte sera supprimé d'ici une semaine.</p>
+    <% end %>
+  </div>
+  <% end %>
+
+  <%= error_messages_for :user %>
+  <%= error_messages_for :user_info %>
+  <%= error_messages_for :image if @user.confirmed? %>
+
+  <div class="span-24">
+    <% form_for @user, :url => user_path, :html => { :multipart => true, :method => :put } do |f| %>
+        <div class="span-4">
+          Identifiant :
+        </div>
+        <div class="span-20 last">
+          <%= h_or_blank @user %>
+        </div>
+        <div class="span-4">
+          Adresse e-mail :
+        </div>
+        <div class="span-20 last">
+          <%= h_or_blank @user.email %>
+        </div>
+
+        <% if @user.active? %>
+        <div class="span-24 last">
+          Rediriger <strong><%= h @user.email_alias %></strong> vers <strong><%= h @user.email %></strong>
+          <%= check_box :user_info, :is_email %> ?
+        </div>
+
+        <% elsif @user.confirmed? %>
+
+        <div class="span-4">
+          Nom :
+        </div>
+        <div class="span-20 last">
+          <%= f.text_field :last_name, :class => :text %>
+        </div>
+        <div class="span-4">
+          Prénom :
+        </div>
+        <div class="span-20 last">
+          <%= f.text_field :first_name, :class => :text %>
+        </div>
+        <div class="span-4">
+          Date de naissance :
+        </div>
+        <div class="span-20 last">
+          <%= f.date_select :birthdate, :start_year => Time.now.year, :end_year => 1900, :include_blank => true %>
+        </div>
+
+        <div class="prepend-4 span-20 last">
+          <div class="info">Vous habitez...</div>
+        </div>
+
+        <% end %>
+
+        <div class="span-4">
+          Ville :
+        </div>
+        <div class="span-20 last">
+          <%= f.text_field :city, :class => :text %>
+        </div>
+        <div class="span-4">
+          Pays :
+        </div>
+        <div class="span-20 last">
+          <%= f.select :country, User.countries, :include_blank => true %>
+        </div>
+
+        <% if @user.confirmed? %>
+
+        <div class="prepend-4 span-20 last">
+          <div class="info">Vérification</div>
+        </div>
+
+        <div class="span-4">
+          Photo/scan de votre pièce d'identité :
+        </div>
+        <div class="span-20 last">
+          <%= file_field_tag 'image[uploaded_data]', :class => :text %>
+          <% if @user.image_code %>
+          <br />
+          Vous devez écrire la suite de caractères &laquo; <strong><%= h @user.image_code %></strong> &raquo; sur un bout de papier et le prendre
+          en photo par-dessus votre pièce d’identité. <%= link_to 'Exemple', image_path('id_example.jpg') %>. La photo sera supprimée de notre serveur dès que votre
+          compte aura été activé.
+          <% end %>
+        </div>
+
+        <% elsif @user.active? %>
+        <% fields_for :user_info, @user.info do |i| %>
+
+        <div class="prepend-4 span-20 last">
+          <div class="info">Et pourquoi pas...</div>
+        </div>
+
+        <div class="span-4">
+          Site web :
+        </div>
+        <div class="span-20 last">
+          <%= i.text_field :website, :class => :text %>
+        </div>
+        <div class="span-4">
+          Steam ID :
+        </div>
+        <div class="span-20 last">
+          http://steamcommunity.com/id/<%= i.text_field :steam_id, :class => :text %>/
+        </div>
+        <div class="span-4">
+          XboxLive ID :
+        </div>
+        <div class="span-20 last">
+          <%= i.text_field :xboxlive_id, :class => :text %>
+        </div>
+        <div class="span-4">
+          Playstation Network ID :
+        </div>
+        <div class="span-20 last">
+          <%= i.text_field :psn_id, :class => :text %>
+        </div>
+        <% end %>
+
+        <div class="prepend-4 span-20 last">
+          <div class="info">Modifier votre mot de passe ? (laisser vide pour ne pas le changer)</div>
+        </div>
+        <div class="span-4">
+          Ancien mot de passe :
+        </div>
+        <div class="span-20 last">
+          <%= f.password_field :previous_password, :class => :text, :value => '' %>
+        </div>
+        <div class="span-4">
+          Nouveau mot de passe :
+        </div>
+        <div class="span-20 last">
+          <%= f.password_field :password, :class => :text, :value => '' %>
+        </div>
+        <div class="span-4">
+          Confirmation du nouveau mot de passe :
+        </div>
+        <div class="span-20 last">
+          <%= f.password_field :password_confirmation, :class => :text, :value => '' %>
+        </div>
+
+        <% end %>
+
+        <div class="prepend-4 span-20 last">
+          <%= f.submit 'Enregistrer', :class => :submit %>
+        </div>
+    <% end %>
+  </div>
+  <div class="span-20 last">
+    <% if @user.confirmed? and @user.image %>
+       <%= link_to image_tag(@user.image.public_filename(:medium)), image_path(@user.image.public_filename) %>
+    <% else %>
+      &nbsp;
+    <% end %>
+  </div>
+  <div class="span-24">
+    <div class="warning">
+      <p>Nous vous rappelons que le forum est 100% anonyme. Le fichier est déclaré à la CNIL et nous nous engageons
+         à ne jamais utiliser les informations personnelles (email, nom, prénom, date de naissance, IP) que vous indiquez
+         lors de votre inscription. Aucune de ces données ne pourra être consultée par un tiers.
+         Vous serez uniquement identifié par votre pseudonyme.</p>
+      <p>
+        <%= link_to('Détruire mon compte et supprimer tous mes messages', user_path, :method => :delete, :confirm => 'Êtes-vous sûr de vouloir détruire votre compte ? Cette action est irreversible.') %>
+      </p>
+    </div>
+  </div>
+</div>

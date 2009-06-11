@@ -1,0 +1,18 @@
+<div class="header span-24">
+<% menu = capture do %>
+  <div class="span-14">
+    <%= breadcrumb nil, nil, nil, link_to('Rechercher', new_search_path) %>
+  </div>
+<% end %>
+<%= menu %>
+</div>
+
+<div class="span-24 search">
+<% form_tag searches_path do %>
+  <%= text_field_tag :s, @string, :class => :text %>
+  <%= submit_tag 'Rechercher', :class => :submit %>
+<% end %>
+</div>
+
+<%= yield %>
+
