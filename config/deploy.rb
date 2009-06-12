@@ -33,7 +33,7 @@ task :stop, :roles => :app do
   sudo "/etc/init.d/thin stop", :as => :root
 end
 
-task :restart, :roles => :app] do
+task :restart, :roles => :app do
   sudo "/etc/init.d/thin restart", :as => :root
 end
 
