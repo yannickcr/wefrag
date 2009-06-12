@@ -25,19 +25,19 @@ task :after_symlink do
   run "ln -nfs #{shared_path}/tmp/attachment_fu #{current_path}/tmp/attachment_fu"
 end
 
-task :start, :roles => [:web] do
+task :start, :roles => :app do
   sudo "/etc/init.d/thin start", :as => :root
 end
 
-task :stop, :roles => [:web] do
+task :stop, :roles => :app do
   sudo "/etc/init.d/thin stop", :as => :root
 end
 
-task :restart, :roles => [:web] do
+task :restart, :roles => :app] do
   sudo "/etc/init.d/thin restart", :as => :root
 end
 
-task :after_update_code, :roles => [:web] do
+task :after_update_code, :roles => :app do
   desc "Link in the production database.yml"
   [ 'database', 'config' ].each do |file|
     run "ln -nfs #{shared_path}/config/#{file}.yml #{release_path}/config/#{file}.yml"
