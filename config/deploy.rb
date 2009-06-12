@@ -25,16 +25,18 @@ task :after_symlink do
   run "ln -nfs #{shared_path}/tmp/attachment_fu #{current_path}/tmp/attachment_fu"
 end
 
-task :start, :roles => :app do
-  sudo "/etc/init.d/thin start", :as => :root
-end
+namespace :deploy do
+  task :start, :roles => :app do
+    sudo "/etc/init.d/thin start", :as => :root
+  end
 
-task :stop, :roles => :app do
-  sudo "/etc/init.d/thin stop", :as => :root
-end
+  task :stop, :roles => :app do
+    sudo "/etc/init.d/thin stop", :as => :root
+  end
 
-task :restart, :roles => :app do
-  sudo "/etc/init.d/thin restart", :as => :root
+  task :restart, :roles => :app do
+    sudo "/etc/init.d/thin restart", :as => :root
+  end
 end
 
 task :after_update_code, :roles => :app do
