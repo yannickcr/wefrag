@@ -46,13 +46,13 @@ task :after_update_code, :roles => [:web] do
   desc "Generate ultrasphinx configuration"
   run <<-CMD
     cd #{release_path} &&
-    RAILS_ENV=#{stage} rake ultrasphinx:configure
+    RAILS_ENV=production rake ultrasphinx:configure
   CMD
 
   desc "Generate styles and scripts cache"
   run <<-CMD
     cd #{release_path} &&
-    RAILS_ENV=#{stage} rake tmp:assets:rebuild
+    RAILS_ENV=production rake tmp:assets:rebuild
   CMD
 end
 
