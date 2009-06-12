@@ -217,25 +217,23 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
   add_index "user_topic_reads", ["user_id", "topic_id"], :name => "index_user_topic_reads_on_user_id_and_topic_id", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "login",                                                                                                                                           :null => false
-    t.string   "email",                                                                                                                                           :null => false
+    t.string   "login",                                                                                                                                   :null => false
+    t.string   "email",                                                                                                                                   :null => false
     t.integer  "group_id"
-    t.boolean  "is_admin",                                                                                                                  :default => false,    :null => false
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
-    t.string   "remember_token",            :limit => 64
-    t.datetime "remember_token_expires_at"
-    t.string   "confirmation_code",         :limit => 40
-    t.string   "first_name",                                                                                                                :default => ""
-    t.string   "last_name",                                                                                                                 :default => ""
-    t.string   "city",                                                                                                                      :default => ""
-    t.string   "country",                                                                                                                   :default => ""
+    t.boolean  "is_admin",                                                                                                          :default => false,    :null => false
+    t.string   "crypted_password",  :limit => 40
+    t.string   "salt",              :limit => 40
+    t.string   "confirmation_code", :limit => 40
+    t.string   "first_name",                                                                                                        :default => ""
+    t.string   "last_name",                                                                                                         :default => ""
+    t.string   "city",                                                                                                              :default => ""
+    t.string   "country",                                                                                                           :default => ""
     t.date     "birthdate"
-    t.enum     "state",                     :limit => [:passive, :pending, :notified, :confirmed, :accepted, :refused, :active, :disabled], :default => :passive, :null => false
+    t.enum     "state",             :limit => [:passive, :pending, :notified, :confirmed, :accepted, :refused, :active, :disabled], :default => :passive, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "image_id"
-    t.enum     "gender",                    :limit => [:male, :female],                                                                     :default => :male
+    t.enum     "gender",            :limit => [:male, :female],                                                                     :default => :male
   end
 
   add_index "users", ["confirmation_code"], :name => "index_users_on_confirmation_code"
@@ -243,7 +241,6 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
   add_index "users", ["group_id"], :name => "fk_users_groups"
   add_index "users", ["image_id"], :name => "fk_users_images"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
-  add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
 
   create_table "versions", :force => true do |t|
     t.integer  "versionable_id"
