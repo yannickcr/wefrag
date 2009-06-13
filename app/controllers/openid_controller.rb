@@ -179,6 +179,6 @@ class OpenidController < ApplicationController
   end
 
   def generate_digest(data)
-    OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA1'), APP_CONFIG['openid']['secret'], data.to_s)
+    OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA1'), OPEN_ID_SECRET, data.to_s)
   end
 end

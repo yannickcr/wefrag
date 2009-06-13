@@ -9,10 +9,6 @@ RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-require 'yaml'
-
-APP_CONFIG = YAML::load_file(File.join(RAILS_ROOT, 'config', 'config.yml'))[RAILS_ENV]
-
 
 Rails::Initializer.run do |config|
 
@@ -29,7 +25,6 @@ Rails::Initializer.run do |config|
 
   # config.active_record.schema_format = :sql
   # config.active_record.default_timezone = :utc
-  config.cache_store = :memory_store
 end
 
 WillPaginate::ViewHelpers.pagination_options[:prev_label] = '&laquo;'

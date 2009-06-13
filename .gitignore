@@ -1,7 +1,7 @@
 log/*
 tmp/*
 config/database.yml
-config/config.yml
+config/initializers/zzz_custom_config.rb
 config/ultrasphinx/development.conf
 config/ultrasphinx/test.conf
 config/ultrasphinx/production.conf
