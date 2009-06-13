@@ -10,10 +10,10 @@ class CreateUserInfos < ActiveRecord::Migration
 
     add_index :user_infos, :user_id, :unique => true
 
-    execute "ALTER TABLE `user_infos` " \
-            "ADD CONSTRAINT `fk_user_info_users` " \
-            "FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) " \
-            "ON DELETE CASCADE ON UPDATE CASCADE"
+    #execute "ALTER TABLE `user_infos` " \
+    #        "ADD CONSTRAINT `fk_user_info_users` " \
+    #        "FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) " \
+    #        "ON DELETE CASCADE ON UPDATE CASCADE"
   end
 
   def self.down

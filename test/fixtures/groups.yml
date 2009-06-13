@@ -1,7 +1,10 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+admin:
+  id: 1
+  title: Admin
+member:
+  id: 2
+  title: Member
+anonymous:
+  id: 3
+  title: Anonymous
 
-# one:
-#   column: value
-#
-# two:
-#   column: value

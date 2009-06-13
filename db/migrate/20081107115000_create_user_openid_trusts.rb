@@ -9,10 +9,10 @@ class CreateUserOpenidTrusts < ActiveRecord::Migration
 
     add_index :user_openid_trusts, [:user_id, :trust_root]
 
-    execute "ALTER TABLE `user_openid_trusts` " \
-            "ADD CONSTRAINT `fk_user_openid_trusts_users` " \
-            "FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) " \
-            "ON DELETE CASCADE ON UPDATE CASCADE"
+    #execute "ALTER TABLE `user_openid_trusts` " \
+    #        "ADD CONSTRAINT `fk_user_openid_trusts_users` " \
+    #        "FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) " \
+    #        "ON DELETE CASCADE ON UPDATE CASCADE"
   end
 
   def self.down

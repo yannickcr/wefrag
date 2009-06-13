@@ -8,10 +8,12 @@ class CreateForums < ActiveRecord::Migration
       t.timestamps
     end
 
-    execute "ALTER TABLE `forums` " \
-            "ADD CONSTRAINT `fk_forums_categories` " \
-            "FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) " \
-            "ON DELETE CASCADE ON UPDATE CASCADE"
+    add_index :forums, :stripped_title, :unique => true
+
+    #execute "ALTER TABLE `forums` " \
+    #        "ADD CONSTRAINT `fk_forums_categories` " \
+    #        "FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) " \
+    #        "ON DELETE CASCADE ON UPDATE CASCADE"
   end
 
   def self.down

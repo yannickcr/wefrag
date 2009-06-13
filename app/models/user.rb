@@ -1,9 +1,6 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
   has_many :openid_trusts, :class_name => 'UserOpenidTrust'
-  has_many :tokens, :class_name => 'OauthToken',
-                    :order      => 'authorized_at DESC',
-                    :include    => :client_application
 
   belongs_to :group
 

@@ -40,6 +40,8 @@
     else
       @search = nil
     end
+  rescue Ultrasphinx::DaemonError
+    @search = nil
   end
 
   private

@@ -42,7 +42,7 @@ class Forum < ActiveRecord::Base
     return true unless user
     posts.count(
       :id,
-      :joins => "LEFT OUTER JOIN `user_topic_reads` ON `user_topic_reads`.topic_id = IF(`posts`.topic_id IS NULL, `posts`.id, `posts`.topic_id) AND `user_topic_reads`.user_id = #{user.id}",
+      :joins => "LEFT OUTER JOIN `user_topic_reads` ON `user_topic_reads`.topic_id = IFNULL(`posts`.topic_id, `posts`.id) AND `user_topic_reads`.user_id = #{user.id}",
       :conditions => ['`posts`.created_at > ? AND (`user_topic_reads`.user_id IS NULL OR (`user_topic_reads`.is_forever = ? AND `user_topic_reads`.read_at < `posts`.created_at))', user.created_at, 0]
       ) == 0
   end

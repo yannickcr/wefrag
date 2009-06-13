@@ -57,17 +57,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :shouts, :requirements => { :id => /[1-9]\d*/ }, :collection => { :box => :any }
   map.shouts_page 'shouts/page/:page', :controller => 'shouts', :action => 'index', :requirements => { :page => /[1-9]\d*/ }, :defaults => { :page => 1 }
 
-  # Oauth
-  map.resources :oauth_clients
-  map.with_options :controller => 'oauth' do |oauth|
-    oauth.connect       'oauth',               :action => 'index'
-    oauth.authorize     'oauth/authorize',     :action => 'authorize'
-    oauth.request_token 'oauth/request_token', :action => 'request_token'
-    oauth.access_token  'oauth/access_token',  :action => 'access_token'
-    oauth.test_request  'oauth/test_request',  :action => 'test_request'
-    oauth.oauth_revoke  'oauth/revoke',        :action => 'revoke'
-  end
-
   map.with_options :controller => 'openid' do |openid|
     openid.openid_server 'openid',        :action => 'index'
     openid.openid_info   'openid/xrds',   :action => 'info', :format => 'xrds'

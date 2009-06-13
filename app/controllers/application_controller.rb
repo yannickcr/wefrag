@@ -2,13 +2,13 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include ExceptionNotifiable
 
-  protect_from_forgery :secret => APP_CONFIG['session']['secret']
+  protect_from_forgery
   filter_parameter_logging :password
 
   helper :all
 
   append_before_filter :set_default_url_options_for_mailers
-  append_before_filter { |c| Rails.cache.clear_local_cache }
+  #append_before_filter { |c| Rails.cache.try(:clear_local_cache) }
 
   def self.exceptions_to_treat_as_404
     exceptions = [ActiveRecord::RecordNotFound,

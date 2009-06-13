@@ -18,19 +18,6 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
     t.datetime "updated_at"
   end
 
-  create_table "client_applications", :force => true do |t|
-    t.string   "name"
-    t.string   "url"
-    t.string   "support_url"
-    t.string   "callback_url"
-    t.string   "key",          :limit => 50
-    t.string   "secret",       :limit => 50
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "client_applications", ["key"], :name => "index_client_applications_on_key", :unique => true
-
   create_table "forums", :force => true do |t|
     t.integer  "category_id",                   :null => false
     t.string   "title"
@@ -41,7 +28,6 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
     t.datetime "updated_at"
   end
 
-  add_index "forums", ["category_id"], :name => "fk_forums_categories"
   add_index "forums", ["stripped_title"], :name => "index_forums_on_stripped_title", :unique => true
 
   create_table "group_forum_rights", :force => true do |t|
@@ -52,12 +38,11 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
     t.boolean  "is_reply",          :default => true,  :null => false
     t.boolean  "is_edit",           :default => true,  :null => false
     t.boolean  "is_moderate",       :default => false, :null => false
+    t.boolean  "is_topic_moderate", :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_topic_moderate", :default => false, :null => false
   end
 
-  add_index "group_forum_rights", ["forum_id"], :name => "fk_group_forum_rights_forums"
   add_index "group_forum_rights", ["group_id", "forum_id"], :name => "index_group_forum_rights_on_group_id_and_forum_id", :unique => true
 
   create_table "groups", :force => true do |t|
@@ -91,29 +76,6 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
 
   add_index "imported_nofrag_items", ["remote_id"], :name => "index_imported_nofrag_items_on_remote_id", :unique => true
 
-  create_table "oauth_nonces", :force => true do |t|
-    t.string   "nonce"
-    t.integer  "timestamp"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "oauth_nonces", ["nonce", "timestamp"], :name => "index_oauth_nonces_on_nonce_and_timestamp", :unique => true
-
-  create_table "oauth_tokens", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "type",                  :limit => 20
-    t.integer  "client_application_id"
-    t.string   "token",                 :limit => 50
-    t.string   "secret",                :limit => 50
-    t.datetime "authorized_at"
-    t.datetime "invalidated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "oauth_tokens", ["token"], :name => "index_oauth_tokens_on_token", :unique => true
-
   create_table "open_id_associations", :force => true do |t|
     t.binary  "server_url", :null => false
     t.string  "handle",     :null => false
@@ -139,17 +101,15 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
     t.boolean  "is_locked",     :default => false
     t.boolean  "is_sticky",     :default => false
     t.datetime "edited_at"
+    t.datetime "last_post_at"
+    t.integer  "last_reply_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "posts_count",   :default => 0
-    t.datetime "last_post_at"
-    t.integer  "last_reply_id"
   end
 
-  add_index "posts", ["forum_id", "topic_id", "is_sticky", "last_post_at"], :name => "fk_posts_forums"
-  add_index "posts", ["topic_id"], :name => "fk_posts_topics"
+  add_index "posts", ["forum_id", "topic_id", "is_sticky", "last_post_at"], :name => "index_posts_for_listing"
   add_index "posts", ["updated_at"], :name => "index_posts_on_updated_at"
-  add_index "posts", ["user_id"], :name => "fk_posts_users"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -170,7 +130,6 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
   end
 
   add_index "shouts", ["created_at"], :name => "index_shouts_on_created_at"
-  add_index "shouts", ["user_id"], :name => "fk_shouts_users"
 
   create_table "user_infos", :force => true do |t|
     t.integer  "user_id",                       :null => false
@@ -203,7 +162,6 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
     t.datetime "updated_at"
   end
 
-  add_index "user_topic_infos", ["topic_id"], :name => "fk_user_topic_infos_topics"
   add_index "user_topic_infos", ["user_id", "topic_id"], :name => "index_user_topic_infos_on_user_id_and_topic_id", :unique => true
 
   create_table "user_topic_reads", :force => true do |t|
@@ -213,7 +171,6 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
     t.boolean  "is_forever", :default => false
   end
 
-  add_index "user_topic_reads", ["topic_id"], :name => "fk_user_topic_reads_topics"
   add_index "user_topic_reads", ["user_id", "topic_id"], :name => "index_user_topic_reads_on_user_id_and_topic_id", :unique => true
 
   create_table "users", :force => true do |t|
@@ -229,27 +186,15 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
     t.string   "city",                                                                                                              :default => ""
     t.string   "country",                                                                                                           :default => ""
     t.date     "birthdate"
+    t.enum     "gender",            :limit => [:male, :female],                                                                     :default => :male
     t.enum     "state",             :limit => [:passive, :pending, :notified, :confirmed, :accepted, :refused, :active, :disabled], :default => :passive, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "image_id"
-    t.enum     "gender",            :limit => [:male, :female],                                                                     :default => :male
   end
 
   add_index "users", ["confirmation_code"], :name => "index_users_on_confirmation_code"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["group_id"], :name => "fk_users_groups"
-  add_index "users", ["image_id"], :name => "fk_users_images"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
-
-  create_table "versions", :force => true do |t|
-    t.integer  "versionable_id"
-    t.string   "versionable_type"
-    t.integer  "number"
-    t.text     "yaml"
-    t.datetime "created_at"
-  end
-
-  add_index "versions", ["versionable_id", "versionable_type"], :name => "index_versions_on_versionable_id_and_versionable_type"
 
 end

@@ -9,10 +9,10 @@ class CreateImages < ActiveRecord::Migration
 
     add_column :users, :image_id, :integer
 
-    execute "ALTER TABLE `users` " \
-            "ADD CONSTRAINT `fk_users_images` " \
-            "FOREIGN KEY (`image_id`) REFERENCES `images` (`id`) " \
-            "ON DELETE SET NULL ON UPDATE CASCADE"
+    #execute "ALTER TABLE `users` " \
+    #        "ADD CONSTRAINT `fk_users_images` " \
+    #        "FOREIGN KEY (`image_id`) REFERENCES `images` (`id`) " \
+    #        "ON DELETE SET NULL ON UPDATE CASCADE"
   end
 
   def self.down

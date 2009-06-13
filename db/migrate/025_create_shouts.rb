@@ -8,10 +8,10 @@ class CreateShouts < ActiveRecord::Migration
 
     add_index :shouts, :created_at
 
-    execute "ALTER TABLE `shouts` " \
-            "ADD CONSTRAINT `fk_shouts_users` " \
-            "FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) " \
-            "ON DELETE CASCADE ON UPDATE CASCADE"
+    #execute "ALTER TABLE `shouts` " \
+    #        "ADD CONSTRAINT `fk_shouts_users` " \
+    #        "FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) " \
+    #        "ON DELETE CASCADE ON UPDATE CASCADE"
   end
 
   def self.down
