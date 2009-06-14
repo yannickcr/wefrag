@@ -40,7 +40,7 @@ namespace :nofrag do
       Topic.transaction do
         topic = forum.topics.create! do |t|
           t.user_id = user.id
-          t.title   = truncate(strip_tags(item.title).strip, 90)
+          t.title   = truncate(strip_tags(item.title).strip, :length => 90)
           t.body    = description
         end
         item.update_attributes!(:topic_id => topic.id)

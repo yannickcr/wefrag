@@ -1,6 +1,7 @@
 set :application, "wefrag"
 
 set :scm, :git
+set :git_enable_submodules, true
 set :repository, "git@github.com:hc/wefrag.git"
 
 set :branch, "stable"
@@ -40,9 +41,9 @@ namespace :deploy do
 end
 
 task :after_update_code, :roles => :app do
-  desc "Link in the production database.yml"
-  [ 'database', 'config' ].each do |file|
-    run "ln -nfs #{shared_path}/config/#{file}.yml #{release_path}/config/#{file}.yml"
+  desc "Link config files"
+  [ 'database.yml', 'initializers/zzz_custom_config.rb' ].each do |file|
+    run "ln -nfs #{shared_path}/config/#{file} #{release_path}/config/#{file}"
   end
 
   desc "Generate ultrasphinx configuration"

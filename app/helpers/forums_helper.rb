@@ -16,7 +16,7 @@ module ForumsHelper
     if user
       html << link_to('Tout lu', read_all_forums_path, :class => :read)
       html << link_to('Administration', admin_forums_path, :class => :admin) if user.can_admin?
-      html << link_to(h(truncate(user.login, 15)), user_path, :class => :user)
+      html << link_to(h(truncate(user.login, :length => 15)), user_path, :class => :user)
     else
       html << link_to('Identification', new_session_path)
       html << link_to('Ouvrir un compte', new_user_path)
