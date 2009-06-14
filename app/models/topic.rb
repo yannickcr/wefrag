@@ -2,7 +2,7 @@ class Topic < Post
   has_many :user_infos, :class_name => 'UserTopicInfo' do
     def can_reply?(user)
       return true unless user
-      Rails.cache.fetch "UserTopicInfo:#{user.id}:#{proxy_owner.id}", :local => true do
+      Rails.cache.fetch "UserTopicInfo:#{user.id}:#{proxy_owner.id}", :expires_in => 1.second do
         if info = find_by_user_id(user.id)
           info.is_reply
         else
@@ -17,7 +17,7 @@ class Topic < Post
   has_many :reads, :class_name => 'UserTopicRead' do
     def for_user(user)
       return false unless user
-      Rails.cache.fetch "UserTopicRead:#{user.id}:#{proxy_owner.id}", :local => true do
+      Rails.cache.fetch "UserTopicRead:#{user.id}:#{proxy_owner.id}", :expires_in => 1.second do
         find_by_user_id(user.id) || false
       end
     end
