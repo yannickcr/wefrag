@@ -1,4 +1,5 @@
 joe:
+  id: 1
   login: joe
   #passsword: joe
   email: joe@example.com
@@ -6,4 +7,14 @@ joe:
   state: active
   salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--joe--") %> 
   crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--joe--") %>
+root:
+  id: 2
+  login: root
+  #passsword: root
+  email: root@example.com
+  group_id: 1
+  state: active
+  is_admin: true
+  salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--root--") %> 
+  crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--root--") %>
 

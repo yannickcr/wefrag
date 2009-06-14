@@ -1,3 +1,4 @@
 member_welcome_rights:
+  id: 1
   group_id: 2
-  forum: welcome
+  forum_id: 1
