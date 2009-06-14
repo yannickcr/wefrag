@@ -1,3 +1,36 @@
 [submodule "vendor/rails"]
 	path = vendor/rails
 	url = git://github.com/rails/rails.git
+[submodule "vendor/plugins/validates_date_time"]
+	path = vendor/plugins/validates_date_time
+	url = git://github.com/nickstenning/validates_date_time.git
+[submodule "vendor/plugins/validates_email_format_of"]
+	path = vendor/plugins/validates_email_format_of
+	url = git://github.com/dancroak/validates_email_format_of.git
+[submodule "vendor/plugins/will_paginate"]
+	path = vendor/plugins/will_paginate
+	url = git://github.com/mislav/will_paginate.git
+[submodule "vendor/plugins/acts_as_list"]
+	path = vendor/plugins/acts_as_list
+	url = git://github.com/rails/acts_as_list.git
+[submodule "vendor/plugins/acts_as_state_machine"]
+	path = vendor/plugins/acts_as_state_machine
+	url = git://github.com/omghax/acts_as_state_machine.git
+[submodule "vendor/plugins/active_scaffold"]
+	path = vendor/plugins/active_scaffold
+	url = git://github.com/activescaffold/active_scaffold.git
+[submodule "vendor/plugins/attachment_fu"]
+	path = vendor/plugins/attachment_fu
+	url = git://github.com/technoweenie/attachment_fu.git
+[submodule "vendor/plugins/exception_notification"]
+	path = vendor/plugins/exception_notification
+	url = git://github.com/rails/exception_notification.git
+[submodule "vendor/plugins/render_component"]
+	path = vendor/plugins/render_component
+	url = git://github.com/rails/render_component.git
+[submodule "vendor/plugins/active_record_openid_store"]
+	path = vendor/plugins/active_record_openid_store
+	url = git://github.com/inarin/active_record_openid_store.git
+[submodule "vendor/plugins/ultrasphinx"]
+	path = vendor/plugins/ultrasphinx
+	url = git://github.com/fauna/ultrasphinx.git
