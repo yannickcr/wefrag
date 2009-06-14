@@ -27,7 +27,7 @@
 	url = git://github.com/rails/exception_notification.git
 [submodule "vendor/plugins/render_component"]
 	path = vendor/plugins/render_component
-	url = git://github.com/rails/render_component.git
+	url = git://github.com/robrasmussen/render_component.git
 [submodule "vendor/plugins/active_record_openid_store"]
 	path = vendor/plugins/active_record_openid_store
 	url = git://github.com/inarin/active_record_openid_store.git
