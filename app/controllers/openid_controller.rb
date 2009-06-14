@@ -27,7 +27,8 @@ class OpenidController < ApplicationController
   end
 
   def info
-    response.headers['content-type'] = 'application/xrds+xml; charset=utf-8'
+    response.content_type = 'application/xrds+xml'
+    response.charset = false
   end
 
   def decide

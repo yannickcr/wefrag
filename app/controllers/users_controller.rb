@@ -8,7 +8,8 @@ class UsersController < ApplicationController
         response.headers['X-XRDS-Location'] = url_for(:format => 'xrds')
       }
       format.xrds {
-        response.headers['content-type'] = 'application/xrds+xml'
+        response.content_type = 'application/xrds+xml'
+        response.charset = false
       }
     end
   end
