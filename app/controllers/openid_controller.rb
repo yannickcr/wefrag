@@ -28,7 +28,6 @@ class OpenidController < ApplicationController
 
   def info
     response.content_type = 'application/xrds+xml'
-    response.charset = false
   end
 
   def decide

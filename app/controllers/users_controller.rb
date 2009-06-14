@@ -3,13 +3,13 @@ class UsersController < ApplicationController
   before_filter :load_user, :only => :show
 
   def show
+    return
     respond_to do |format|
       format.html {
         response.headers['X-XRDS-Location'] = url_for(:format => 'xrds')
       }
       format.xrds {
         response.content_type = 'application/xrds+xml'
-        response.charset = false
       }
     end
   end
