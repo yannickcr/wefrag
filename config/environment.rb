@@ -19,12 +19,22 @@ Rails::Initializer.run do |config|
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
   # config.log_level = :debug
 
+  # Specify gems that this application depends on and have them installed with rake gems:install
+  config.gem "mysql"
+  config.gem "memcache-client", :lib => "memcache"
+  config.gem "ruby-openid", :lib => "openid"
+  config.gem "chronic"
+  config.gem "rmagick"
+
   config.active_record.observers = :user_observer,
                                    :post_observer,
                                    :topic_observer
 
   # config.active_record.schema_format = :sql
   # config.active_record.default_timezone = :utc
+  if defined?(Memcache)
+    config.cache_store = :mem_cache_store, 'localhost', { :namespace => "wefrag" }
+  end
 end
 
 WillPaginate::ViewHelpers.pagination_options[:prev_label] = '&laquo;'
@@ -33,6 +43,4 @@ WillPaginate::ViewHelpers.pagination_options[:next_label] = '&raquo;'
 WhiteListHelper.tags.merge %w(u)
 
 ExceptionNotifier.exception_recipients = 'ced@wal.fr'
-
-Ultrasphinx::Search.client_options[:finder_methods].unshift(:find_with_includes)
 
