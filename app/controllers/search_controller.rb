@@ -20,7 +20,7 @@
     forums    = logged_in? ? current_user.readable_forums : Group.anonymous.readable_forums
     forum_ids = forums ? forums.collect { |f| f.id } : []
 
-    unless forum_ids.empty? or @string.empty? or params[:s].size < 3
+    unless !defined?(Ultrasphinx) or forum_ids.empty? or @string.empty? or params[:s].size < 3
       Ultrasphinx::Search.excerpting_options[:before_match] = '[b]'
       Ultrasphinx::Search.excerpting_options[:after_match]  = '[/b]'
       Ultrasphinx::Search.excerpting_options[:limit]        = 512

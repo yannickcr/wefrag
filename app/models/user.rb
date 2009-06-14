@@ -289,7 +289,7 @@ class User < ActiveRecord::Base
   end
 
   def reset_cache
-    Rails.cache.write "User:#{id}", self.reload, :expires_in => 1.hour
+    Rails.cache.write "User:#{id}", User.find(id), :expires_in => 1.hour
   end
 
   def expire_cache

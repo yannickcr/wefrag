@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
   helper :all
 
   append_before_filter :set_default_url_options_for_mailers
-  #append_before_filter { |c| Rails.cache.try(:clear_local_cache) }
+  append_before_filter { |c| Rails.cache.clear if Rails.cache.is_a?(ActiveSupport::Cache::MemoryStore) }
+
 
   def self.exceptions_to_treat_as_404
     exceptions = [ActiveRecord::RecordNotFound,
@@ -25,11 +26,6 @@ class ApplicationController < ActionController::Base
 
   def has_feed
     @has_feed = true
-  end
-
-  # Cache control
-  def is_cacheable?
-    !logged_in? && flash.empty? && request.get?
   end
 
   # HTTP errors
