@@ -31,9 +31,7 @@ Rails::Initializer.run do |config|
 
   # config.active_record.schema_format = :sql
   # config.active_record.default_timezone = :utc
-  if defined?(Memcache)
-    config.cache_store = :mem_cache_store, 'localhost', { :namespace => "wefrag" }
-  end
+  config.cache_store = :mem_cache_store, 'localhost', { :namespace => "wefrag" }
 end
 
 WillPaginate::ViewHelpers.pagination_options[:prev_label] = '&laquo;'
