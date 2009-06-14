@@ -20,11 +20,10 @@ Rails::Initializer.run do |config|
   # config.log_level = :debug
 
   # Specify gems that this application depends on and have them installed with rake gems:install
-  config.gem "mysql"
   config.gem "memcache-client", :lib => "memcache"
   config.gem "ruby-openid", :lib => "openid"
   config.gem "chronic"
-  config.gem "rmagick"
+  config.gem "rmagick", :lib => "RMagick"
 
   config.active_record.observers = :user_observer,
                                    :post_observer,
