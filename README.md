@@ -32,3 +32,7 @@ Démarrez le serveur web :
 Accèdez au site à l'adresse [http://localhost:3000](http://localhost:3000). 
 Vous pouvez vous identifier avec les comptes joe/joe et root/root
 
+# Contact
+
+* ced {at} wal {dot} fr
+
