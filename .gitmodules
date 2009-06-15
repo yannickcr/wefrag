@@ -15,7 +15,7 @@
 	url = git://github.com/rails/acts_as_list.git
 [submodule "vendor/plugins/acts_as_state_machine"]
 	path = vendor/plugins/acts_as_state_machine
-	url = git://github.com/omghax/acts_as_state_machine.git
+	url = git://github.com/jmonteiro/acts_as_state_machine.git
 [submodule "vendor/plugins/active_scaffold"]
 	path = vendor/plugins/active_scaffold
 	url = git://github.com/activescaffold/active_scaffold.git

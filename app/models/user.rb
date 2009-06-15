@@ -283,8 +283,7 @@ class User < ActiveRecord::Base
   end
 
   def self.auth_by_id(id)
-    #get_cache(id)
-    find_by_id(id)
+    get_cache(id)
   end
 
   def self.get_cache(id)
@@ -294,11 +293,11 @@ class User < ActiveRecord::Base
   end
 
   def reset_cache
-    #Rails.cache.write "User:#{id}", (User.find_by_id(id) || false), :expires_in => 1.hour
+    Rails.cache.write "User:#{id}", (User.find_by_id(id) || false), :expires_in => 1.hour
   end
 
   def expire_cache
-    #Rails.cache.delete "User:#{id}"
+    Rails.cache.delete "User:#{id}"
   end
 
   protected
