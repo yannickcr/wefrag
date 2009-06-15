@@ -34,7 +34,6 @@ module AuthenticatedSystem
 
   # Store the given user id in the session.
   def current_user=(user)
-    ActionController::Base.session_options[:session_expires] = 2.months.from_now
     session[:user_id] = (user.nil? || user.is_a?(Symbol)) ? nil : user.id
     @current_user = user
   end

@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
   end
 
   def load_current_user
-    @user = current_user.reload
+    @user = User.find(current_user.id)
   end
 
   # Required rights
