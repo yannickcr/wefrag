@@ -34,10 +34,7 @@ Rails::Initializer.run do |config|
   config.cache_store = :mem_cache_store, 'localhost', { :namespace => "wefrag" }
 end
 
-WillPaginate::ViewHelpers.pagination_options[:prev_label] = '&laquo;'
-WillPaginate::ViewHelpers.pagination_options[:next_label] = '&raquo;'
 
 WhiteListHelper.tags.merge %w(u)
-
 ExceptionNotifier.exception_recipients = 'ced@wal.fr'
 

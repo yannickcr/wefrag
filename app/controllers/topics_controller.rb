@@ -1,5 +1,4 @@
 class TopicsController < ApplicationController
-
   before_filter :load_forum, :only   => [:new, :create]
   before_filter :load_topic, :except => [:new, :create]
   before_filter :load_user,  :only   => :ban
@@ -19,26 +18,25 @@ class TopicsController < ApplicationController
 
   after_filter :read_topic, :only => :show
 
-  # Cache
-  #caches_action :show, { :ttl => 10.minutes, :if => Proc.new { |c| [Mime::ATOM, Mime::RSS].include?(c.request.format) } }
-
   def show
     respond_to do |format|
       format.html do
-        @posts = @topic.paginate_posts(:page => params[:page], :per_page => Post.per_page, :total_entries => @topic.posts_count)
+        @posts = @topic.posts.paginate(:page => params[:page], :per_page => Post.per_page, :total_entries => @topic.posts_count)
         raise WillPaginate::InvalidPage.new(params[:page], params[:page].to_i) if @posts.out_of_bounds? && @posts.current_page > 1
       end
       format.rss do
-        @posts = @topic.posts(:order => '`posts`.created_at DESC', :limit => 25)
+        @posts = @topic.posts.all(:order => '`posts`.created_at DESC', :limit => 25)
       end
       format.atom do
-        @posts = @topic.posts(:order => '`posts`.created_at DESC', :limit => 25)
+        @posts = @topic.posts.all(:order => '`posts`.created_at DESC', :limit => 25)
       end
     end
   end
 
   def new
-    @topic = Topic.new
+    @topic = @forum.topics.new do |t|
+      t.user = current_user
+    end
   end
 
   def quote
@@ -48,16 +46,17 @@ class TopicsController < ApplicationController
 
   def create
     begin
-      @topic = @forum.topics.create!(params[:topic]) do |t|
+      @topic = @forum.topics.new(params[:topic]) do |t|
         t.user = current_user
         t.ip_address = request.remote_ip
       end
 
+      @topic.save!
+
       flash[:notice] = 'Le sujet a été créé.'
       flash[:notice] += ' (<a href="http://play.wefrag.com">Planifier cet événement sur weplay ?</a>' if @forum.is_weplay?
       redirect_to :action => :show, :id => @topic
-    rescue ActiveRecord::RecordNotSaved, ActiveRecord::RecordInvalid => e
-      @topic = e.record
+    rescue ActiveRecord::RecordNotSaved, ActiveRecord::RecordInvalid
       render :action => :new
     end
   end

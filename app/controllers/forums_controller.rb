@@ -1,5 +1,4 @@
 class ForumsController < ApplicationController
-
   before_filter :load_forum,       :except => [:home, :index, :read_all]
   before_filter :read_required!,   :except => [:home, :index, :read_all]
   before_filter :active_required!, :only   => :read_all
@@ -18,14 +17,8 @@ class ForumsController < ApplicationController
   end
 
   def show
-    @topics = @forum.topics.latests.paginate(:page => params[:page], :total_entries => @forum.topics_count)
+    @topics = @forum.topics.paginate(:page => params[:page], :total_entries => @forum.topics_count)
     raise WillPaginate::InvalidPage.new(params[:page], params[:page]) if @topics.out_of_bounds? && @topics.current_page > 1
-
-    respond_to do |format|
-      format.html
-      format.rss
-      format.atom
-    end
   end
 
   def read

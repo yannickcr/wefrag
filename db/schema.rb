@@ -20,10 +20,10 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
 
   create_table "forums", :force => true do |t|
     t.integer  "category_id",                   :null => false
-    t.string   "title"
-    t.string   "stripped_title"
-    t.integer  "position",       :default => 1
-    t.text     "description"
+    t.integer  "position",       :default => 1, :null => false
+    t.string   "title",                         :null => false
+    t.string   "stripped_title",                :null => false
+    t.text     "description",                   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -95,20 +95,20 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
     t.integer  "forum_id",                         :null => false
     t.integer  "topic_id"
     t.integer  "user_id",                          :null => false
-    t.string   "title"
-    t.string   "ip_address"
-    t.text     "body"
-    t.boolean  "is_locked",     :default => false
-    t.boolean  "is_sticky",     :default => false
+    t.string   "ip_address",                       :null => false
+    t.string   "title",         :default => "",    :null => false
+    t.text     "body",                             :null => false
+    t.boolean  "is_locked",     :default => false, :null => false
+    t.boolean  "is_sticky",     :default => false, :null => false
+    t.integer  "posts_count",   :default => 0,     :null => false
     t.datetime "edited_at"
     t.datetime "last_post_at"
     t.integer  "last_reply_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "posts_count",   :default => 0
   end
 
-  add_index "posts", ["forum_id", "topic_id", "is_sticky", "last_post_at"], :name => "index_posts_for_listing"
+  add_index "posts", ["forum_id", "topic_id", "is_sticky", "last_post_at"], :name => "index_topics_list"
   add_index "posts", ["updated_at"], :name => "index_posts_on_updated_at"
 
   create_table "sessions", :force => true do |t|

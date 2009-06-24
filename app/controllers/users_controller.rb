@@ -14,19 +14,10 @@ class UsersController < ApplicationController
     end
   end
 
-  def addresses
-    @users = Rails.cache.fetch "Users:addresses", :expires_in => 1.hour do
-      User.active.address
-    end
-    respond_to do |format|
-      format.xml
-    end
-  end
-
   private
 
   def load_user
-    if params[:id].match /^[1-9]\d*$/
+    if params[:id] =~ /^[1-9]\d*$/
       @user = User.find(params[:id])
       redirect_to show_user_url(@user)
     else

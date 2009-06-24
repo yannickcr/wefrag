@@ -14,8 +14,11 @@ class PostsController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :preview
 
   def new
-    @post = @topic.replies.new
-    @posts = @topic.posts(:order => '`posts`.created_at DESC', :limit => 25)
+    @post = @topic.posts.new do |p|
+      p.user = current_user
+    end
+
+    @posts = @topic.posts.latest
   end
 
   def preview
@@ -29,23 +32,28 @@ class PostsController < ApplicationController
   end
 
   def quote
-    @post = @topic.replies.new(:body => "[quote][u][b]#{@post.user}[/b] a dit :[/u]\n" + @post.body + "[/quote]\n")
-    @posts = @topic.posts(:order => '`posts`.created_at DESC', :limit => 25)
+    @post = @topic.posts.new do |p|
+      p.body = "[quote][u][b]#{@post.user}[/b] a dit :[/u]\n#{@post.body}[/quote]\n"
+      p.user = current_user
+    end
+
+    @posts = @topic.posts.latest
     render :action => :new
   end
 
   def create
     begin
-      @post = @topic.replies.create!(params[:post]) do |p|
-        p.forum = @topic.forum
+      @post = @topic.posts.new(params[:post]) do |p|
         p.user = current_user
         p.ip_address = request.remote_ip
       end
+
+      @post.save!
+
       flash[:notice] = 'La réponse a été ajoutée.'
       redirect_to forum_topic_url(@topic.forum, @topic, :page => @topic.reload.last_page)
-    rescue ActiveRecord::RecordNotSaved, ActiveRecord::RecordInvalid => e
-      @post = e.record
-      @posts = @topic.posts(:order => '`posts`.created_at DESC', :limit => 25)
+    rescue ActiveRecord::RecordNotSaved, ActiveRecord::RecordInvalid
+      @posts = @topic.posts.latest
       render :action => :new
     end
   end
@@ -74,8 +82,7 @@ class PostsController < ApplicationController
   private
 
   def load_post
-    @post = @topic.replies.find(params[:id])
-    @posts = @topic.posts(:order => '`posts`.created_at DESC', :limit => 25)
+    @post  = @topic.posts.find(params[:id])
   end
 
   def sanitize_params

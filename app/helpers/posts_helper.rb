@@ -45,11 +45,10 @@ module PostsHelper
   end
 
   def post_date(post)
-    day = post.created_at.to_date == Date.today ? 'aujourd\'hui' : 'le %d/%m/%Y'
-    post.created_at.strftime('<strong>%Hh%M</strong> ' + day)
+    post.created_at.strftime("<strong>%Hh%M</strong> #{post.created_at.to_date == Date.today ? 'aujourd\'hui' : 'le %d/%m/%Y'}") if post
   end
 
   def post_summary(post)
-    post_date(post) + ' par ' + content_tag(:span, user_login(post.user), :class => :user)
+    post_date(post) + ' par ' + content_tag(:span, user_login(post.user), :class => :user) if post
   end
 end

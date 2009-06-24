@@ -21,7 +21,6 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => 'users', :action => 'show', :requirements => { :id => /[a-zA-Z0-9_\-]+/ } do |user|
     user.show_user            'users/:id'
     user.show_user_formatted  'users/:id.:format'
-    user.show_users_addresses 'users/i/addresses', :action => 'addresses'
   end
 
   # Search
@@ -43,6 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   map.ban_forum_topic 'forums/:forum_id/topics/:id/ban/:user_id', :controller => 'topics', :action => 'ban', :method => :post, :requirements => { :forum_id => /[a-zA-Z0-9_\-]+/, :id => /[1-9]\d*/, :user_id => /[1-9]\d*/ }, :conditions => { :method => :post }
   map.preview_post 'posts/preview', :controller => 'posts', :action => 'preview'
 
+
   # Forum pagination
   map.with_options :controller => 'forums', :action => 'show', :requirements => { :id => /[a-zA-Z0-9_\-]+/, :page => /[1-9]\d*/ } do |forum|
     forum.forum 'forums/:id/:page', :defaults => { :page => 1 }
@@ -50,8 +50,8 @@ ActionController::Routing::Routes.draw do |map|
   end
   map.forum_topic 'forums/:forum_id/topics/:id/:page', :controller => 'topics', :action => 'show', :requirements => { :forum_id => /[a-zA-Z0-9_\-]+/, :id => /[1-9]\d*/, :page => /[1-9]\d*/ }, :defaults => { :page => 1 }
 
-  # Nofrag
-  map.nofrag 'nofrag/:id', :controller => 'nofrag', :action => 'news', :requirements => { :id => /[1-9]\d*/ }
+  map.resources :nofrag, :only => :show
+
 
   # Shout
   map.resources :shouts, :requirements => { :id => /[1-9]\d*/ }, :collection => { :box => :any }

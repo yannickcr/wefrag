@@ -1,25 +1,17 @@
 class Forum < ActiveRecord::Base
-  belongs_to :category
+  default_scope :order => '`forums`.position ASC'
   acts_as_list :scope => :category
+
+  belongs_to :category
 
   has_many :rights, :class_name => 'GroupForumRight'
   has_many :groups, :through => :rights
-  has_many :posts, :order => 'posts.created_at ASC', :include => :user do
-    def find_all_by_topic(topic, options = {})
-      with_scope(:find => { :include => :topic, :conditions => ['`posts`.topic_id = ? OR `posts`.id = ?', topic.id, topic.id ] }) do
-        find(:all, options)
-      end
-    end
-    def latest
-      find :first, :order => 'posts.created_at DESC', :limit => 1
-    end
-  end
 
-  has_many :topics,
-           :conditions => '`posts`.topic_id IS NULL',
-           :include => :user
+  has_many :posts, :include => :user
+  has_many :topics, :include => :user
 
   attr_accessible :title, :stripped_title
+
   validates_length_of :title, :in => 3..50
   validates_length_of :stripped_title, :in => 3..50
   validates_format_of :stripped_title, :with => /^([a-z0-9]+)(([a-z0-9_\-]+)?([a-z0-9]+))?$/

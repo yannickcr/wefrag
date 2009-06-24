@@ -1,4 +1,6 @@
 class Topic < Post
+  default_scope :conditions => '`posts`.topic_id IS NULL', :order => '`posts`.is_sticky DESC, `posts`.last_post_at DESC, `posts`.created_at DESC, `posts`.id DESC'
+
   has_many :user_infos, :class_name => 'UserTopicInfo' do
     def can_reply?(user)
       return true unless user
@@ -27,8 +29,6 @@ class Topic < Post
                      :order      => '`posts`.created_at DESC',
                      :include    => :user
 
-  named_scope :latests, :order => '`posts`.is_sticky DESC, `posts`.last_post_at DESC'
-
   attr_accessible :title
   validates_length_of :title, :in => 3..100
 
@@ -46,12 +46,8 @@ class Topic < Post
 
   alias :last_page :pages_count
 
-  def posts(options = {})
-    forum.posts.find_all_by_topic(self, options)
-  end
-
-  def paginate_posts(options = {})
-    forum.posts.paginate_by_topic(self, options)
+  def posts
+    forum.posts.for_topic(self)
   end
 
   def is_read_by?(user, post = nil)

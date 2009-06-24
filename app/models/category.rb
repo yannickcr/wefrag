@@ -1,8 +1,8 @@
 class Category < ActiveRecord::Base
+  default_scope :order => '`categories`.position ASC'
   acts_as_list
 
-  has_many :forums, :order => '`forums`.position ASC'
-  default_scope :order => '`categories`.position ASC'
+  has_many :forums
 
   attr_accessible :title
   validates_length_of :title, :in => 3..50

@@ -1,13 +1,13 @@
 class UserObserver < ActiveRecord::Observer
   def after_create(user)
-    UserMailer.deliver_register user
+    UserMailer.deliver_register(user)
   end
 
   def after_save(user)
     if user.accepted? 
       UserMailer.deliver_accept(user)
     end
-    user.reset_cache
+    user.delete_cache
   end
 
   def after_destroy(user)
@@ -20,7 +20,7 @@ class UserObserver < ActiveRecord::Observer
     elsif user.refused?
       UserMailer.deliver_refuse(user)
     end
-    user.expire_cache
+    user.delete_cache
   end
 end
 

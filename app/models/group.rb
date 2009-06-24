@@ -17,10 +17,14 @@ class Group < ActiveRecord::Base
     "#{title}"
   end
 
-  def self.anonymous
-    Rails.cache.fetch "Group:3", :expires_in => 10.minutes do
-      find(3) || false
+  def self.get_cache(id)
+    Rails.cache.fetch "Group:#{id}", :expires_in => 1.hour do
+      find(id) rescue false
     end
+  end
+
+  def self.anonymous
+    get_cache(3)
   end
 
   def readable_forums
@@ -34,7 +38,7 @@ class Group < ActiveRecord::Base
 
   def forum_rights(forum, *args)
     forum_id = forum.is_a?(Forum) ? forum.id : forum
-    Rails.cache.fetch "Forum:#{forum_id}.Group:#{id}.rights", :expires_in => 10.minutes do
+    Rails.cache.fetch "Group:#{id}.Forum:#{forum_id}.rights(#{updated_at.to_i})", :expires_in => 10.minutes do
       rights.find_by_forum_id(forum_id, *args) || false
     end
   end

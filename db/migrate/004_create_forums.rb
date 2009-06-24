@@ -1,11 +1,14 @@
 class CreateForums < ActiveRecord::Migration
   def self.up
-    create_table :forums do |t|
-      t.integer :category_id, :null => false
-      t.string :title, :stripped_title
-      t.integer :position, :default => 1
-      t.text :description
-      t.timestamps
+    create_table :forums do |table|
+      table.with_options :null => false do |t|
+        t.belongs_to :category
+        t.integer :position, :default => 1
+        t.string :title, :stripped_title
+        t.text :description, :default => ''
+      end
+
+      table.timestamps
     end
 
     add_index :forums, :stripped_title, :unique => true

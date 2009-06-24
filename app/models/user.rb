@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :openid_trusts, :class_name => 'UserOpenidTrust'
 
   belongs_to :group
+  belongs_to :image
 
   has_one :info, :class_name => 'UserInfo'
 
@@ -11,6 +12,7 @@ class User < ActiveRecord::Base
 
   has_many :topics
   has_many :posts
+
   has_many :reads, :class_name => 'UserTopicRead'
   has_many :topic_infos, :class_name => 'UserTopicInfo' do
     def can_reply?(topic, *args)
@@ -19,7 +21,6 @@ class User < ActiveRecord::Base
     alias :can_edit? :can_reply?
   end
 
-  belongs_to :image
 
   named_scope :active,  :conditions => { :state => 'active' }
   named_scope :pending, :conditions => { :state => 'pending' }
@@ -282,21 +283,25 @@ class User < ActiveRecord::Base
     end
   end
 
+  def writeable
+    if frozen?
+      User.find(id) rescue nil
+    else
+      self
+    end
+  end
+
   def self.auth_by_id(id)
     get_cache(id)
   end
 
   def self.get_cache(id)
     Rails.cache.fetch "User:#{id}", :expires_in => 1.hour do
-      find_by_id(id) || false
+      find(id) rescue false
     end
   end
 
-  def reset_cache
-    Rails.cache.write "User:#{id}", (User.find_by_id(id) || false), :expires_in => 1.hour
-  end
-
-  def expire_cache
+  def delete_cache
     Rails.cache.delete "User:#{id}"
   end
 
