@@ -4,8 +4,9 @@ welcome:
   title: Welcome
   stripped_title: welcome
 
-# one:
-#   column: value
-#
-# two:
-#   column: value
+secret:
+  id: 2
+  category_id: 1
+  title: Secret
+  stripped_title: secret
+

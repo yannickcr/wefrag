@@ -4,12 +4,13 @@ class ShoutsController < ApplicationController
   before_filter :active_required!
   before_filter :admin_required!, :only => :destroy
 
-  before_filter :sanitize_params, :only => [:create, :update]
+  before_filter :sanitize_params, :only => :create
 
   skip_before_filter :verify_authenticity_token, :only => :index
 
   def index
-    @shouts = Shout.latest.paginate(:page => params[:page])
+    @shouts = Shout.paginate(:page => params[:page])
+
     respond_to do |format|
       format.html
       format.js
@@ -28,14 +29,16 @@ class ShoutsController < ApplicationController
   end
 
   def create
-    @shout = Shout.create!(params[:shout]) do |s|
+    @shout = Shout.new(params[:shout]) do |s|
       s.user = current_user
       s.ip_address = request.remote_ip
     end
+
+    @shout.save!
+
     flash[:notice] = 'Le message a été ajouté.'
     redirect_to forums_url
-  rescue ActiveRecord::RecordNotSaved, ActiveRecord::RecordInvalid => e
-    @shout = e.record
+  rescue ActiveRecord::RecordNotSaved, ActiveRecord::RecordInvalid
     render :action => :new
   end
 

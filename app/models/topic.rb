@@ -1,5 +1,5 @@
 class Topic < Post
-  default_scope :conditions => '`posts`.topic_id IS NULL', :order => '`posts`.is_sticky DESC, `posts`.last_post_at DESC, `posts`.created_at DESC, `posts`.id DESC'
+  default_scope :order => '`posts`.is_sticky DESC, `posts`.last_post_at DESC, `posts`.created_at DESC, `posts`.id DESC'
 
   has_many :user_infos, :class_name => 'UserTopicInfo' do
     def can_reply?(user)
@@ -26,7 +26,6 @@ class Topic < Post
   end
 
   has_many :replies, :class_name => 'Post',
-                     :order      => '`posts`.created_at DESC',
                      :include    => :user
 
   attr_accessible :title
@@ -56,8 +55,10 @@ class Topic < Post
 
     if read = reads.for_user(user)
       read.has_read?(created_at)
-    else
+    elsif created_at
       user.created_at > created_at
+    else
+      true
     end
   end
 
@@ -69,7 +70,7 @@ class Topic < Post
 
   def first_unread_by(user)
     if read = reads.for_user(user) and !read.is_forever
-      replies.find :first, :include => [], :conditions => ['created_at > ?', read.read_at.to_s(:db)], :order => 'created_at ASC', :limit => 1
+      replies.find :first, :include => [], :conditions => ['created_at > ?', read.read_at.to_s(:db)], :limit => 1
     end
   end
 
@@ -118,11 +119,11 @@ class Topic < Post
 
   def last_post(force = false)
     Rails.cache.fetch "Topic:#{id}.last_post", :expires_in => 1.day, :force => force do
-      replies.first || Topic.find_by_id(self.id) || false
+      posts.last
     end
   end
 
-  def reset_last_post_at
+  def update_last_post_at
     update_attribute(:last_post_at, last_post.created_at)
   end
 end

@@ -8,7 +8,7 @@ class Forum < ActiveRecord::Base
   has_many :groups, :through => :rights
 
   has_many :posts, :include => :user
-  has_many :topics, :include => :user
+  has_many :topics, :conditions => '`posts`.topic_id IS NULL', :include => :user
 
   attr_accessible :title, :stripped_title
 

@@ -14,7 +14,7 @@ class PostsController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :preview
 
   def new
-    @post = @topic.posts.new do |p|
+    @post = @topic.replies.new do |p|
       p.user = current_user
     end
 
@@ -32,9 +32,9 @@ class PostsController < ApplicationController
   end
 
   def quote
-    @post = @topic.posts.new do |p|
-      p.body = "[quote][u][b]#{@post.user}[/b] a dit :[/u]\n#{@post.body}[/quote]\n"
+    @post = @topic.replies.new do |p|
       p.user = current_user
+      p.body = "[quote][u][b]#{@post.user}[/b] a dit :[/u]\n#{@post.body}[/quote]\n"
     end
 
     @posts = @topic.posts.latest
@@ -43,7 +43,7 @@ class PostsController < ApplicationController
 
   def create
     begin
-      @post = @topic.posts.new(params[:post]) do |p|
+      @post = @topic.replies.new(params[:post]) do |p|
         p.user = current_user
         p.ip_address = request.remote_ip
       end
@@ -67,7 +67,7 @@ class PostsController < ApplicationController
       flash[:notice] = 'La réponse a été mise à jour.'
       redirect_to forum_topic_url(@forum, @topic, :page => @post.page)
     rescue ActiveRecord::RecordNotSaved, ActiveRecord::RecordInvalid
-      @posts = @topic.posts(:order => '`posts`.created_at DESC', :limit => 25)
+      @posts = @topic.posts.latest
       render :action => :edit
     end
   end
@@ -82,7 +82,7 @@ class PostsController < ApplicationController
   private
 
   def load_post
-    @post  = @topic.posts.find(params[:id])
+    @post = @topic.replies.find(params[:id])
   end
 
   def sanitize_params

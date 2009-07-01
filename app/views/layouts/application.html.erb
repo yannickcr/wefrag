@@ -27,7 +27,7 @@
   <div id="body">
     <div class="container">
       <%= flash_messages %>
-      <%= yield %>
+      <%= yield(:content) || yield %>
     </div>
   </div>
 </div>

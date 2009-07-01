@@ -1,9 +1,11 @@
 module ForumsHelper
   def forum_icon(forum, user)
-    if forum.can_read?(user)
-      'unread' unless forum.is_read_by?(user)
-    else
+    if !forum.can_read?(user)
       'disabled'
+    elsif forum.is_read_by?(user)
+      'read'
+    else
+      'unread'
     end
   end
 
@@ -46,10 +48,10 @@ module ForumsHelper
   end
 
   def user_login(user)
-    link_to h(user), show_user_path(user)
+    link_to(h(user), show_user_path(user)) if user
   end
 
   def show_shouts_box
-    render :partial => 'shouts/box', :locals => { :shouts => Shout.latest.all(:limit => 20) }
+    render :partial => 'shouts/box', :locals => { :shouts => Shout.all(:limit => 20) }
   end
 end

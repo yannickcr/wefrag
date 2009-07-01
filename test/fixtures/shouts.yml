@@ -1,0 +1,23 @@
+insult:
+  user: joe
+  body: "Mais que se passe t'il!!!"
+
+welcome:
+  user: root
+  body: "Welcome on wefrag!"
+
+question:
+  user: root
+  body: "How to do that?"
+
+answer:
+  user: joe
+  body: "It's really easy"
+
+<% (1..210).each do |i| %>
+<%= "shout#{i}" %>:
+  user: joe
+  body: <%= "My body #{Time.now}" %>
+
+<% end %>
+

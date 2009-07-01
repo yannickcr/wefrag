@@ -7,12 +7,12 @@ class ForumsController < ApplicationController
   before_filter :sanitize_params, :only => :show
 
   def home
-    response.headers['X-XRDS-Location'] = openid_info_url
+    headers['X-XRDS-Location'] = openid_info_url
     redirect_to :action => :index
   end
 
   def index
-    response.headers['X-XRDS-Location'] = openid_info_url
+    headers['X-XRDS-Location'] = openid_info_url
     @categories = Category.all_with_forums
   end
 

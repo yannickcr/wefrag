@@ -1,0 +1,11 @@
+<% (1..80).each do |i| %>
+<%= "topic#{i}" %>:
+  forum_id: 2
+  user: joe
+  title: <%= "My topic #{Time.now}" %>
+  body: <%= "My body #{Time.now}" %>
+  created_at: <%= 5.hours.from_now.to_s(:db) %> 
+  updated_at: <%= 5.hours.from_now.to_s(:db) %> 
+
+<% end %>
+

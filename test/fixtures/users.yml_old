@@ -1,29 +1,20 @@
 joe:
+  id: 1
   login: joe
+  #passsword: joe
   email: joe@example.com
-  #password: joe
+  group_id: 2
   state: active
   salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--joe--") %> 
   crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--joe--") %>
-
-william:
-  login: william
-  email: william@example.com
-
 root:
+  id: 2
   login: root
+  #passsword: root
   email: root@example.com
-  #password: root
+  group_id: 1
   state: active
   is_admin: true
   salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--root--") %> 
   crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--root--") %>
-
-passive:
-  login: passive
-  email: passive@example.com
-  #password: passive
-  state: passive
-  salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--passive--") %> 
-  crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--passive--") %>
 

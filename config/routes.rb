@@ -11,7 +11,8 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # User
-  map.resource :session
+  map.resource :session, :except => [ :edit, :update ]
+
   map.resource :user, :controller => 'user'
   map.with_options :controller => 'user', :requirements => { :code => /[a-f0-9]{32,64}/ } do |user|
     user.confirm_user 'user/:code',        :action => 'confirm'
@@ -32,7 +33,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # Forum
-  map.resources :forums, :collection => { :read_all => :any }, :member => { :read => :any }, :requirements => { :id => /[a-zA-Z0-9_\-]+/ } do |f|
+  map.resources :forums, :only => [ :index, :show ], :collection => { :read_all => :any }, :member => { :read => :any }, :requirements => { :id => /[a-zA-Z0-9_\-]+/ } do |f|
     f.with_options :requirements => { :forum_id => /[a-zA-Z0-9_\-]+/, :id => /[1-9]\d*/ } do |forum|
       forum.resources :topics, :member => { :quote => :get, :stick => :post, :lock => :post, :move => :any, :read => :any, :read_forever => :any } do |topic| 
         topic.resources :posts, :member => { :quote => :get }, :requirements => { :topic_id => /[1-9]\d*/ }
@@ -54,7 +55,7 @@ ActionController::Routing::Routes.draw do |map|
 
 
   # Shout
-  map.resources :shouts, :requirements => { :id => /[1-9]\d*/ }, :collection => { :box => :any }
+  map.resources :shouts, :requirements => { :id => /[1-9]\d*/ }, :except => [ :edit, :update ], :collection => { :box => :any }
   map.shouts_page 'shouts/page/:page', :controller => 'shouts', :action => 'index', :requirements => { :page => /[1-9]\d*/ }, :defaults => { :page => 1 }
 
   map.with_options :controller => 'openid' do |openid|

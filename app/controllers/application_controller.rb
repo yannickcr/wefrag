@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   # HTTP errors
   def forbidden
     if logged_in?
-      render :text => 'forbidden'
+      render :text => 'forbidden', :status => 403
     else
       flash[:notice] = 'Vous devez être identifié pour accéder à cette page'
       redirect_to new_session_url

@@ -1,7 +1,7 @@
 class Category < ActiveRecord::Base
   default_scope :order => '`categories`.position ASC'
-  acts_as_list
 
+  acts_as_list
   has_many :forums
 
   attr_accessible :title
