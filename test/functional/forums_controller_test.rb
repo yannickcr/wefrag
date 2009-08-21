@@ -3,90 +3,51 @@ require File.dirname(__FILE__) + '/../test_helper'
 class ForumsControllerTest < ActionController::TestCase
   def setup
     @request.remote_addr = '1.2.3.4'
+    @forum = forums(:secret)
+    @user = users(:root)
+    @page = '2'
   end 
 
-  def test_should_get_home
+  test 'on GET to :home' do
     get :home
-    assert @response.headers['X-XRDS-Location'], 'Found OpenId header'
+
+    assert_not_nil @response.headers['X-XRDS-Location']
+    assert_response :redirect
     assert_redirected_to :action => :index
   end
 
-  def test_should_get_index
+  test 'on GET to :index' do
     get :index
-    assert @response.headers['X-XRDS-Location'], 'Found OpenId header'
+
+    assert_not_nil @response.headers['X-XRDS-Location']
     assert_response :success
-    assert_select '.forums'
+    assert_template 'index'
   end
 
-  def test_should_show_missing_forum
-    get :show, :id => 'unknown'
-    assert_response :missing
-  end
+  test 'on GET to :show' do
+    get :show, { :id => @forum.to_param }, { :user_id => @user.id }
 
-  def test_should_show_unauthorized_forum
-    get :show, :id => "#{forums(:welcome)}"
-    assert_redirected_to :controller => :sessions, :action => :new
-  end
-
-  def test_should_show_unauthorized_forum_with_page
-    get :show, { :id => "#{forums(:secret)}", :page => 2 }
-    assert_redirected_to :controller => :sessions, :action => :new
-  end
-
-  def test_should_show_forbidden_forum
-    get :show, { :id => "#{forums(:welcome)}" }, { :user_id => users(:joe).id }
-    assert_response 403
-  end
-
-  def test_should_show_forbidden_forum_with_page
-    get :show, { :id => "#{forums(:secret)}", :page => 2 }, { :user_id => users(:joe).id }
-    assert_response 403
-  end
-
-  def test_should_show_forum
-    get :show, { :id => "#{forums(:welcome)}" }, { :user_id => users(:root).id }
+    assert assigns(:forum)
     assert_response :success
-
-    assert_select '.forum'
+    assert_template 'show'
     assert_select 'link[type=?]', 'application/rss+xml'
   end
 
-  def test_should_show_forum_with_page
-    get :show, { :id => "#{forums(:welcome)}", :page => 1 }, { :user_id => users(:root).id }
+  test 'on GET to :show with page' do
+    get :show, { :id => @forum.to_param, :page => @page }, { :user_id => @user.id }
+
+    assert assigns(:forum)
     assert_response :success
-
-    assert_select '.forum'
-
-    get :show, { :id => "#{forums(:secret)}", :page => 2 }, { :user_id => users(:root).id }
-    assert_response :success
-
-    assert_select '.forum'
-    assert_select '.pagination .current', 2
+    assert_template 'show'
+    assert_select '.pagination .current', '2'
   end
 
-  def test_should_show_forum_with_invalid_page
-    get :show, { :id => "#{forums(:welcome)}", :page => 2 }, { :user_id => users(:root).id }
-    assert_response :missing
+  test 'on GET to :show as rss' do
+    get :show, { :id => @forum.to_param, :format => 'rss' }, { :user_id => @user.id }
 
-    get :show, { :id => "#{forums(:secret)}", :page => 5 }, { :user_id => users(:root).id }
-    assert_response :missing
-  end
-
-  def test_should_show_forum_rss
-    get :show, { :id => "#{forums(:welcome)}", :format => :rss }, { :user_id => users(:root).id }
+    assert_equal @response.content_type, Mime::RSS
     assert_response :success
-    assert_equal @response.content_type, Mime::RSS, 'Forum RSS is XML'
-  end
-
-  def test_should_show_forum_rss_with_page
-    get :show, { :id => "#{forums(:secret)}", :format => :rss, :page => 2 }, { :user_id => users(:root).id }
-    assert_response :success
-    assert_equal @response.content_type, Mime::RSS, 'Forum RSS is XML'
-  end
-
-  def test_should_show_forum_rss_with_invalid_page
-    get :show, { :id => "#{forums(:welcome)}", :format => :rss, :page => 2 }, { :user_id => users(:root).id }
-    assert_response :missing
+    assert_template 'show'
   end
 end
 

@@ -3,9 +3,9 @@ module Test
     module UserHelper
       private
 
-      def with_login(&block)
+      def with_login
         login
-        yield(block)
+        yield users(:root)
         logout
       end
 

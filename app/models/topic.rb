@@ -1,7 +1,7 @@
 class Topic < Post
   default_scope :order => '`posts`.is_sticky DESC, `posts`.last_post_at DESC, `posts`.created_at DESC, `posts`.id DESC'
 
-  has_many :user_infos, :class_name => 'UserTopicInfo' do
+  has_many :user_infos, :class_name => 'UserTopicInfo', :dependent => :delete_all do
     def can_reply?(user)
       return true unless user
       Rails.cache.fetch "UserTopicInfo:#{user.id}:#{proxy_owner.id}", :expires_in => 1.second do
@@ -16,7 +16,7 @@ class Topic < Post
     alias :can_delete? :can_reply?
   end
 
-  has_many :reads, :class_name => 'UserTopicRead' do
+  has_many :reads, :class_name => 'UserTopicRead', :dependent => :delete_all do
     def for_user(user)
       return false unless user
       Rails.cache.fetch "UserTopicRead:#{user.id}:#{proxy_owner.id}", :expires_in => 1.second do
@@ -26,7 +26,8 @@ class Topic < Post
   end
 
   has_many :replies, :class_name => 'Post',
-                     :include    => :user
+                     :include    => :user,
+                     :dependent  => :delete_all
 
   attr_accessible :title
   validates_length_of :title, :in => 3..100
@@ -107,19 +108,19 @@ class Topic < Post
 
   alias :can_ban? :can_lock?
 
-  def replies_count(force = false)
-    Rails.cache.fetch "Topic:#{id}.replies_count", :expires_in => 1.day, :force => force do
+  def replies_count
+    Rails.cache.fetch cache_key('replies_count'), :expires_in => 1.hour do
       replies.count
     end
   end
 
-  def posts_count(force = false)
-    replies_count(force) + 1
+  def posts_count
+    replies_count + 1
   end
 
-  def last_post(force = false)
-    Rails.cache.fetch "Topic:#{id}.last_post", :expires_in => 1.day, :force => force do
-      posts.last
+  def last_post
+    Rails.cache.fetch cache_key('last_post'), :expires_in => 1.hour do
+      posts.last || false
     end
   end
 

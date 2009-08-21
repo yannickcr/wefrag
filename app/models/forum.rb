@@ -20,8 +20,8 @@ class Forum < ActiveRecord::Base
     "#{title}"
   end
 
-  def last_post(force = false)
-    Rails.cache.fetch "Forum:#{id}.last_post", :expires_in => 1.day, :force => force do
+  def last_post
+    Rails.cache.fetch cache_key('last_post'), :expires_in => 1.hour do
       posts.last || false
     end
   end
@@ -67,19 +67,27 @@ class Forum < ActiveRecord::Base
     rights.is_topic_moderate
   end
 
-  def topics_count(force = false)
-    Rails.cache.fetch("Forum:#{id}.topics_count", :expires_in => 1.day, :force => force) do
+  def topics_count
+    Rails.cache.fetch cache_key('topics_count'), :expires_in => 1.hour do
       topics.count
     end
   end
 
-  def posts_count(force = false)
-    Rails.cache.fetch("Forum:#{id}.posts_count", :expires_in => 1.day, :force => force) do
+  def posts_count
+    Rails.cache.fetch cache_key('posts_count'), :expires_in => 1.hour do
       posts.count
     end
   end
 
+  def touch!
+    update_attribute :updated_at, Time.now
+  end
+
   protected
+
+  def cache_key(data)
+    "Forum(#{id}).at(#{(updated_at.to_i)}).#{data}"
+  end
 
   def has_rights?(user)
     collection = user || Group.anonymous

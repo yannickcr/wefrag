@@ -22,8 +22,10 @@ class User < ActiveRecord::Base
   end
 
 
-  named_scope :active,  :conditions => { :state => 'active' }
-  named_scope :pending, :conditions => { :state => 'pending' }
+  named_scope :active,    :conditions => { :state => 'active'    }
+  named_scope :pending,   :conditions => { :state => 'pending'   }
+  named_scope :confirmed, :conditions => { :state => 'confirmed' }
+
   named_scope :authenticatable, :conditions => { :state => ['confirmed', 'active' ] }
 
   named_scope :address, :select => 'users.city, users.country',
@@ -296,13 +298,13 @@ class User < ActiveRecord::Base
   end
 
   def self.get_cache(id)
-    Rails.cache.fetch "User:#{id}", :expires_in => 1.hour do
+    Rails.cache.fetch "User(#{id})", :expires_in => 1.hour do
       find(id) rescue false
     end
   end
 
   def delete_cache
-    Rails.cache.delete "User:#{id}"
+    Rails.cache.delete "User(#{id})"
   end
 
   protected

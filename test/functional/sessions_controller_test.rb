@@ -3,32 +3,20 @@ require File.dirname(__FILE__) + '/../test_helper'
 class SessionsControllerTest < ActionController::TestCase
   def setup
     @request.remote_addr = '1.2.3.4'
-  end 
-
-  def test_should_route_to_show
-    assert_routing('session', { :controller => 'sessions', :action => 'show' }, { }, { }, 'Route "session" not found')
+    @user = users(:joe)
   end
 
-  def test_should_route_to_new
-    assert_routing('session/new', { :controller => 'sessions', :action => 'new' }, { }, { }, 'Route "session/new" not found')
-  end
-
-  def test_should_route_to_create
-    assert_routing({ :method => :post, :path => 'session' }, { :controller => 'sessions', :action => 'create' }, { }, { }, 'Route create "session" not found')
-  end
-
-  def test_should_route_to_destroy
-    assert_routing({ :method => :delete, :path => 'session' }, { :controller => 'sessions', :action => 'destroy' }, { }, { }, 'Route destroy "session" not found')
-  end
-
-  def test_should_get_show
+  test 'on GET to :show' do
     get :show
-    assert_redirected_to :action => :new
+    assert_response :redirect
+    assert_redirected_to new_session_path
   end
 
-  def test_should_get_new
+  test 'on GET to :new' do
     get :new
+
     assert_response :success
+    assert_template 'new'
 
     assert_select 'form[action=?] input', session_path do
       assert_select '[name=?]', 'login'
@@ -36,55 +24,35 @@ class SessionsControllerTest < ActionController::TestCase
     end
   end
 
-  def test_should_get_new_as_js
+  test 'on GET to :new as javascript' do
     get :new, :format => 'js'
+
     assert_response :success
-
+    assert_template 'new'
     assert_equal @response.content_type, Mime::JS
-    assert_no_tag :tag => 'html'
 
+    assert_no_tag :tag => 'html'
     assert_tag :tag => 'form', :attributes => { :action => session_path }
     assert_tag :tag => 'input', :attributes => { :name => 'login' }
     assert_tag :tag => 'input', :attributes => { :name => 'password' }
   end
 
-  def test_should_create_session
-    login('joe', 'joe')
-    assert_redirected_to :controller => :forums, :action => :index
+  test 'on POST to :create' do
+    post :create, { :login => @user.login, :password => 'joe' }
 
-    assert_equal @response.session[:user_id], users(:joe).id
-    assert_match /identifié/, flash[:notice] 
+    assert_response :redirect
+    assert_redirected_to forums_path
+    assert_equal session[:user_id], @user.id
+    assert_match /maintenant identifié/, flash[:notice]
   end
 
-  def test_should_create_session_with_invalid_password
-    [ 'joe ', '', 'joe someveryveryveryveryveryverylong data', ' joe', 'anything', 'joe*', '%joe', '%', '--', '*' ].each do |password|
-      login('joe', password)
-      assert_response :success, "Password #{password} is invalid for #{users(:joe).login} login"
-      assert_select '.errorExplanation', /passe.+incorrect/
-    end
-  end
+  test 'on DELETE to :destroy' do
+    delete :destroy, nil, { :user_id => @user.id }
 
-  def test_should_create_session_with_invalid_login
-    [ 'john', 'joe*', '%joe', '%', '--', '*' ].each do |login|
-      login(login, 'joe')
-      assert_response :success, "Login #{login} is invalid"
-      assert_select '.errorExplanation', /passe.+incorrect/
-    end
-  end
-
-  def test_should_destroy_session
-    login('joe', 'joe')
-    assert_equal @response.session[:user_id], users(:joe).id
-
-    delete :destroy
-    assert_redirected_to :controller => :forums, :action => :index#forums_url
-    assert_nil @response.session[:user_id], 'User id removed from session'
-  end
-
-  private
-
-  def login(user, password)
-    post :create, { :login => user, :password => password }
+    assert_nil session[:user_id]
+    assert_response :redirect
+    assert_redirected_to forums_path
+    assert_match /plus identifié/, flash[:notice]
   end
 end
 

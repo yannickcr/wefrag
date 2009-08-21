@@ -60,6 +60,8 @@ class UserController < ApplicationController
 
   def destroy
     @user.destroy
+    unauthenticate
+
     flash[:notice] = 'Votre compte a été supprimé.'
     redirect_to forums_url
   end

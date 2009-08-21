@@ -22,7 +22,7 @@ class OpenidController < ApplicationController
     if logged_in? && is_authorized?(@req, current_user)
       authorize!(@req, current_user) and return
     else
-      redirect_to :action => :decide, :req => encode_params(params)
+      redirect_to :action => :decide, :req => self.class.encode_params(params)
     end
   end
 
@@ -31,7 +31,7 @@ class OpenidController < ApplicationController
   end
 
   def decide
-    @req = get_openid_request(decode_params(params[:req])) or return
+    @req = get_openid_request(self.class.decode_params(params[:req])) or return
 
     if @req.id_select
       if logged_in? and current_user.active?
@@ -91,6 +91,15 @@ class OpenidController < ApplicationController
 
   protected
 
+  def self.encode_params(params)
+    # keys to strings
+    params = Hash[*params.collect { |k, v| [k.to_s, v] }.flatten]
+    params = params.reject { |k, v| not k =~ /^openid\./ } .sort
+
+    data = ActiveSupport::Base64.encode64(Marshal.dump(params)).chop
+    "#{data}--#{generate_digest(data)}"
+  end
+
   def server
     @server ||= Server.new(ActiveRecordStore.new, openid_server_url)
   end
@@ -134,6 +143,9 @@ class OpenidController < ApplicationController
   end
 
   def get_openid_request(data)
+    #Convert symbol keys to strings
+    data = Hash[*data.collect { |k, v| [k.to_s, v] }.flatten]
+
     begin
       req = server.decode_request(data)
     rescue ProtocolError => e
@@ -168,17 +180,12 @@ class OpenidController < ApplicationController
     render_response(resp)
   end
 
-  def encode_params(params)
-    data = ActiveSupport::Base64.encode64(Marshal.dump(params)).chop 
-    "#{data}--#{generate_digest(data)}"
-  end
-
-  def decode_params(string)
+  def self.decode_params(string)
     data, digest = string.to_s.split('--')
     Marshal.load(ActiveSupport::Base64.decode64(data)) if digest.to_s == generate_digest(data)
   end
 
-  def generate_digest(data)
+  def self.generate_digest(data)
     OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA1'), OPEN_ID_SECRET, data.to_s)
   end
 end

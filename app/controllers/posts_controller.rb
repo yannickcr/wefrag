@@ -33,6 +33,7 @@ class PostsController < ApplicationController
 
   def quote
     @post = @topic.replies.new do |p|
+      p.forum = @topic.forum
       p.user = current_user
       p.body = "[quote][u][b]#{@post.user}[/b] a dit :[/u]\n#{@post.body}[/quote]\n"
     end
@@ -44,6 +45,7 @@ class PostsController < ApplicationController
   def create
     begin
       @post = @topic.replies.new(params[:post]) do |p|
+        p.forum = @topic.forum
         p.user = current_user
         p.ip_address = request.remote_ip
       end

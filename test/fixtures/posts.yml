@@ -3,9 +3,46 @@
   forum_id: 2
   user: joe
   title: <%= "My topic #{Time.now}" %>
-  body: <%= "My body #{Time.now}" %>
+  body: <%= "My body #{Time.now} is cool" %>
   created_at: <%= 5.hours.from_now.to_s(:db) %> 
   updated_at: <%= 5.hours.from_now.to_s(:db) %> 
 
+<% (1..43).each do |j| %>
+<%= "post#{i}_#{j}" %>:
+  forum_id: 2
+  topic: <%= "topic#{i}" %>
+  user: root
+  body: This is my reply
+  created_at: <%= 6.hours.from_now.to_s(:db) %> 
+  updated_at: <%= 6.hours.from_now.to_s(:db) %> 
+
 <% end %>
+<% end %>
+
+locked_topic:
+  forum_id: 2
+  user: joe
+  title: <%= "My topic #{Time.now}" %>
+  body: <%= "My body #{Time.now}" %>
+  is_locked: true
+  created_at: <%= 5.hours.from_now.to_s(:db) %> 
+  updated_at: <%= 5.hours.from_now.to_s(:db) %> 
+
+sticky_topic:
+  forum_id: 2
+  user: joe
+  title: <%= "My topic #{Time.now}" %>
+  body: <%= "My body #{Time.now}" %>
+  is_sticky: true
+  created_at: <%= 5.hours.from_now.to_s(:db) %> 
+  updated_at: <%= 5.hours.from_now.to_s(:db) %> 
+
+read_forever_topic:
+  forum_id: 2
+  user: joe
+  title: <%= "My topic #{Time.now}" %>
+  body: <%= "My body #{Time.now}" %>
+  is_sticky: true
+  created_at: <%= 5.hours.from_now.to_s(:db) %> 
+  updated_at: <%= 5.hours.from_now.to_s(:db) %> 
 

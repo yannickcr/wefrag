@@ -1,9 +1,5 @@
 class ShoutsController < ApplicationController
-
-  before_filter :load_shout, :except => [:index, :box, :new, :create]
   before_filter :active_required!
-  before_filter :admin_required!, :only => :destroy
-
   before_filter :sanitize_params, :only => :create
 
   skip_before_filter :verify_authenticity_token, :only => :index
@@ -25,7 +21,9 @@ class ShoutsController < ApplicationController
   end
 
   def new
-    @shout = Shout.new
+    @shout = Shout.new do |s|
+      s.user = current_user
+    end
   end
 
   def create
@@ -42,17 +40,7 @@ class ShoutsController < ApplicationController
     render :action => :new
   end
 
-  def destroy
-    @shout.destroy
-    flash[:notice] = 'Le message a été supprimé.'
-    redirect_to forums_url
-  end
-
   private
-
-  def load_shout
-    @shout = Shout.find(params[:id])
-  end
 
   def sanitize_params
     params[:shout] = {} unless params[:shout].is_a?(Hash)

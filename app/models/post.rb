@@ -87,7 +87,15 @@ class Post < ActiveRecord::Base
     find(id, :include => [:forum, :topic, :user])
   end
 
+  def touch!
+    update_attribute :updated_at, Time.now
+  end
+
   protected
+
+  def cache_key(data)
+    "Post(#{id}).at(#{(updated_at.to_i)}).#{data}"
+  end
 
   def has_rights?(user)
     collection = user || Group.anonymous
