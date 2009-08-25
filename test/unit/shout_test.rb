@@ -49,7 +49,7 @@ class ShoutTest < ActiveSupport::TestCase
     shouts = Shout.all.to_json
     assert_not_equal shouts, '', 'Shouts json is not empty'
 
-    assert_nothing_raised ActiveSupport::JSON::ParseError, 'Shouts json is not valid' do
+    assert_nothing_raised 'Shouts json is not valid' do
       shouts = ActiveSupport::JSON.decode(shouts)
     end
 

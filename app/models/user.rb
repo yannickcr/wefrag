@@ -48,9 +48,15 @@ class User < ActiveRecord::Base
 
   validates_presence_of   :login, :email
   validates_length_of     :login, :within => 3..20
+  validates_format_of     :login, :with   => /^([a-zA-Z0-9_\-]+)$/i
   validates_length_of     :email, :within => 3..200
-  validates_format_of     :login, :with   => /^([a-zA-Z0-9_\-]+)$/i, :on => :create
-  validates_uniqueness_of :login, :email, :case_sensitive => false
+  validates_email_format_of :email, :message => ' ne semble pas être une adresse e-mail valide.'
+
+  validates_uniqueness_of :login, :case_sensitive => false, :on => :create
+  validates_uniqueness_of :login, :case_sensitive => false, :on => :update, :if => :login_changed?
+
+  validates_uniqueness_of :email, :case_sensitive => false, :on => :create
+  validates_uniqueness_of :email, :case_sensitive => false, :on => :update, :if => :email_changed?
 
   validates_presence_of     :password,                :if => :password_required?
   validates_presence_of     :password_confirmation,   :if => :password_required?, :on => :update
@@ -67,7 +73,6 @@ class User < ActiveRecord::Base
   validates_inclusion_of :country, :in => self.countries, :allow_nil => true, :allow_blank => true
 
   validates_date :birthdate, :allow_nil => true, :message => 'n\'est pas une date correcte'
-  validates_email_format_of :email, :message => ' ne semble pas être une adresse e-mail valide.'
 
   before_validation_on_create :set_random_password
   before_create               :make_confirmation_code
