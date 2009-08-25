@@ -1,6 +1,8 @@
 class Topic < Post
   default_scope :order => '`posts`.is_sticky DESC, `posts`.last_post_at DESC, `posts`.created_at DESC, `posts`.id DESC'
 
+  belongs_to :forum, :touch => true
+
   has_many :user_infos, :class_name => 'UserTopicInfo', :dependent => :delete_all do
     def can_reply?(user)
       return true unless user

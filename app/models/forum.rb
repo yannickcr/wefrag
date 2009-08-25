@@ -79,10 +79,6 @@ class Forum < ActiveRecord::Base
     end
   end
 
-  def touch!
-    update_attribute :updated_at, Time.now
-  end
-
   protected
 
   def cache_key(data)
