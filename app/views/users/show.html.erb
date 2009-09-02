@@ -51,7 +51,7 @@
 </div>
 
 <%- content_for :headers do -%>
-  <meta http-equiv="X-XRDS-Location" content="<%= show_user_formatted_url(@user, :format => 'xrds') %>" />
+  <meta http-equiv="X-XRDS-Location" content="<%= show_user_url(@user, :format => 'xrds') %>" />
   <link rel="openid.server" href="<%= openid_server_url %>" />
   <link rel="openid2.provider" href="<%= openid_server_url %>" />
 <%- end -%>
