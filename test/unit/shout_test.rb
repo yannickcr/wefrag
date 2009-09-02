@@ -57,7 +57,7 @@ class ShoutTest < ActiveSupport::TestCase
 
     shouts.each do |shout|
       assert_equal shout.keys, ['shout']
-      assert_equal shout['shout'].keys, ['created_at', 'body', 'user']
+      assert_equal shout['shout'].keys.sort, ['body', 'created_at', 'user']
     end
   end
 
