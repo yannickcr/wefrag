@@ -4,7 +4,7 @@ set :scm, :git
 set :git_enable_submodules, true
 set :repository, "git@github.com:hc/wefrag.git"
 
-set :branch, "stable"
+set :branch, "deploy"
 set :repository_cache, "git_cache"
 set :deploy_via, :remote_cache
 set :ssh_options, { :forward_agent => true }
