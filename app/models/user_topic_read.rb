@@ -3,7 +3,7 @@ class UserTopicRead < ActiveRecord::Base
   belongs_to :topic
 
   def has_read?(at)
-    is_forever or (read_at >= at)
+    is_forever || (read_at && (read_at >= at))
   end
 
   def self.read_forever!(user, topic)
