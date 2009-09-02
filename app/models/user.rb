@@ -149,7 +149,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_param(login)
-    find_by_login(URI.unescape(login))
+    find_by_login(URI.unescape("#{login}"))
   end
 
   def has_email_alias?

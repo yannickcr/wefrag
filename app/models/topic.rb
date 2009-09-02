@@ -127,6 +127,6 @@ class Topic < Post
   end
 
   def update_last_post_at
-    update_attribute(:last_post_at, last_post.created_at)
+    update_attribute(:last_post_at, posts.last.created_at)
   end
 end
