@@ -46,7 +46,7 @@ class TopicsControllerTest < ActionController::TestCase
 
   test "Should create a topic" do
     data = { :title => 'Hellow world!', :body => 'Hi, how are you today?' }
-    assert_difference 'Topic.find_all_by_topic_id(nil).count' do
+    assert_difference 'Topic.topic.count' do
       post :create, { :forum_id => "#{@forum.to_param}", :topic => data }, { :user_id => @user.id }
     end
     
@@ -87,7 +87,7 @@ class TopicsControllerTest < ActionController::TestCase
   end
 
   test "Should delete a topic" do
-    assert_difference 'Topic.find_all_by_topic_id(nil).count', -1 do
+    assert_difference 'Topic.topic.count', -1 do
       assert_difference 'Post.count', -@topic.posts_count do
         delete :destroy, { :forum_id => "#{@topic.forum.to_param}", :id => "#{@topic.to_param}" }, { :user_id => @user.id }
       end

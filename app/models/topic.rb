@@ -3,6 +3,8 @@ class Topic < Post
 
   belongs_to :forum, :touch => true
 
+  named_scope :topic, { :conditions => '`posts`.topic_id IS NULL' }
+
   has_many :user_infos, :class_name => 'UserTopicInfo', :dependent => :delete_all do
     def can_reply?(user)
       return true unless user

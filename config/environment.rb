@@ -27,7 +27,7 @@ Rails::Initializer.run do |config|
 
   # config.active_record.schema_format = :sql
   # config.active_record.default_timezone = :utc
-  config.cache_store = :mem_cache_store, 'localhost', { :namespace => "wefrag" }
+  config.cache_store = :mem_cache_store, 'localhost', { :namespace => "wefrag/#{RAILS_ENV}" }
 end
 
 
