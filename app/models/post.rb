@@ -1,10 +1,7 @@
 class Post < ActiveRecord::Base
-  default_scope :order => '`posts`.created_at ASC, `posts`.id ASC'
-
   belongs_to :forum
   belongs_to :topic
   belongs_to :user
-
 
   named_scope :before, lambda { |post| {
     :conditions => [ '`posts`.created_at <= ?', post.created_at ]
@@ -14,7 +11,7 @@ class Post < ActiveRecord::Base
     :conditions => ['`posts`.topic_id = ? OR `posts`.id = ?', topic.id, topic.id ]
   } }
 
-  named_scope :latest, :order => '`posts`.created_at DESC, `posts`.id DESC', :limit => 15
+  named_scope :latest, :order => '`posts`.created_at DESC, `posts`.id DESC', :limit => 16
 
 
   is_indexed :fields => ['forum_id', 'created_at', 'title', 'body'],
