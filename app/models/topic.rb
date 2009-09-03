@@ -6,25 +6,26 @@ class Topic < Post
   has_many :user_infos, :class_name => 'UserTopicInfo', :dependent => :delete_all do
     def can_reply?(user)
       return true unless user
-      Rails.cache.fetch "UserTopicInfo:#{user.id}:#{proxy_owner.id}", :expires_in => 1.second do
-        if info = find_by_user_id(user.id)
-          info.is_reply
-        else
-          true
-        end
+      if info = find_by_user_id(user.id)
+        info.is_reply
+      else
+        true
       end
     end
     alias :can_edit?   :can_reply?
     alias :can_delete? :can_reply?
+
+    extend ActiveSupport::Memoizable
+    memoize :can_reply?
   end
 
   has_many :reads, :class_name => 'UserTopicRead', :dependent => :delete_all do
     def for_user(user)
-      return false unless user
-      Rails.cache.fetch "UserTopicRead:#{user.id}:#{proxy_owner.id}", :expires_in => 1.second do
-        find_by_user_id(user.id) || false
-      end
+      find_by_user_id(user.id) if user
     end
+
+    extend ActiveSupport::Memoizable
+    memoize :for_user
   end
 
   has_many :replies, :class_name => 'Post',
@@ -66,8 +67,6 @@ class Topic < Post
   end
 
   def is_read_forever_by?(user, post = nil)
-    return true unless user
-    created_at = post ? post.created_at : last_post_at
     read = reads.for_user(user) and read.is_forever
   end
 

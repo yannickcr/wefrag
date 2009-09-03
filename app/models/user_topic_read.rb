@@ -3,7 +3,9 @@ class UserTopicRead < ActiveRecord::Base
   belongs_to :topic
 
   def has_read?(at)
-    is_forever || (read_at && (read_at >= at))
+    is_forever || read_at >= at
+  rescue NoMethodError, ArgumentError
+    false
   end
 
   def self.read_forever!(user, topic)
