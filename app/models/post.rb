@@ -11,7 +11,8 @@ class Post < ActiveRecord::Base
     :conditions => ['`posts`.topic_id = ? OR `posts`.id = ?', topic.id, topic.id ]
   } }
 
-  named_scope :latest, :order => '`posts`.created_at DESC, `posts`.id DESC', :limit => 16
+  named_scope :oldest, :order => '`posts`.created_at ASC, `posts`.id ASC'
+  named_scope :latest, :order => '`posts`.created_at DESC, `posts`.id DESC', :limit => 15
 
 
   is_indexed :fields => ['forum_id', 'created_at', 'title', 'body'],

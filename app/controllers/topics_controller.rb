@@ -21,14 +21,14 @@ class TopicsController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        @posts = @topic.posts.paginate(:page => params[:page], :per_page => Post.per_page, :total_entries => @topic.posts_count)
+        @posts = @topic.posts.oldest.paginate(:page => params[:page], :per_page => Post.per_page, :total_entries => @topic.posts_count)
         raise WillPaginate::InvalidPage.new(params[:page], params[:page].to_i) if @posts.out_of_bounds? && @posts.current_page > 1
       end
       format.rss do
-        @posts = @topic.posts.all(:order => '`posts`.created_at DESC', :limit => 25)
+        @posts = @topic.posts.oldest.all(:order => '`posts`.created_at DESC', :limit => 25)
       end
       format.atom do
-        @posts = @topic.posts.all(:order => '`posts`.created_at DESC', :limit => 25)
+        @posts = @topic.posts.oldest.all(:order => '`posts`.created_at DESC', :limit => 25)
       end
     end
   end

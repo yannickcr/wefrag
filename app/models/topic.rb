@@ -123,11 +123,11 @@ class Topic < Post
 
   def last_post
     Rails.cache.fetch cache_key('last_post'), :expires_in => 1.hour do
-      posts.last || false
+      posts.oldest.last || false
     end
   end
 
   def update_last_post_at
-    update_attribute(:last_post_at, posts.last.created_at)
+    update_attribute(:last_post_at, posts.oldest.last.created_at)
   end
 end

@@ -7,7 +7,7 @@ class Forum < ActiveRecord::Base
   has_many :rights, :class_name => 'GroupForumRight'
   has_many :groups, :through => :rights
 
-  has_many :posts, :order => '`posts`.created_at ASC, `posts`.id ASC', :include => :user
+  has_many :posts, :include => :user
   has_many :topics, :conditions => '`posts`.topic_id IS NULL', :include => :user
 
   attr_accessible :title, :stripped_title
@@ -22,7 +22,7 @@ class Forum < ActiveRecord::Base
 
   def last_post
     Rails.cache.fetch cache_key('last_post'), :expires_in => 1.hour do
-      posts.last || false
+      posts.oldest.last || false
     end
   end
 
