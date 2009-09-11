@@ -17,7 +17,12 @@ class ShoutsController < ApplicationController
   end
 
   def box
-    render :layout => 'simple'
+    respond_to do |format|
+      format.html do
+        render :layout => 'simple'
+      end
+      format.js
+    end
   end
 
   def new
