@@ -38,6 +38,8 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
 
+  map.resources :topics, :only => :timetrack, :member => { :timetrack => :post }
+
   map.ban_forum_topic 'forums/:forum_id/topics/:id/ban/:user_id', :controller => 'topics', :action => 'ban', :requirements => { :forum_id => /[a-zA-Z0-9_\-]+/, :id => /[1-9]\d*/, :user_id => /[1-9]\d*/ }, :conditions => { :method => :post }
   map.preview_post 'posts/preview', :controller => 'posts', :action => 'preview'
 

@@ -61,6 +61,10 @@ class TopicsRoutingTest < ActionController::TestCase
     assert_routing({ :path => "/forums/#{@topic.forum.to_param}/topics/#{@topic.to_param}/ban/#{@user.id}", :method => :post }, { :controller => 'topics', :action => 'ban', :forum_id => "#{@topic.forum.to_param}", :id => "#{@topic.to_param}", :user_id => "#{@user.id}" })
   end
 
+  test 'route to :timetrack' do
+    assert_routing({ :method => :post, :path => "/topics/#{@topic.to_param}/timetrack" }, { :controller => 'topics', :action => 'timetrack', :id => "#{@topic.to_param}" })
+  end
+
   test 'helper to :show' do
     assert_equal "/forums/#{@topic.forum.to_param}/topics/#{@topic.to_param}", forum_topic_path(@topic.forum, @topic)
   end
@@ -99,6 +103,10 @@ class TopicsRoutingTest < ActionController::TestCase
 
   test 'helper to :ban' do
     assert_equal "/forums/#{@topic.forum.to_param}/topics/#{@topic.to_param}/ban/#{@user.id}", ban_forum_topic_path(@topic.forum, @topic, @user.id)
+  end
+
+  test 'helper to :timetrack' do
+    assert_equal "/topics/#{@topic.to_param}/timetrack", timetrack_topic_path(@topic)
   end
 end
 

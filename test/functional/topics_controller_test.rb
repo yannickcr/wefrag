@@ -182,5 +182,13 @@ class TopicsControllerTest < ActionController::TestCase
 
   test "Should unban an user from a topic" do
   end
+
+  test "Should timetrack a topic" do
+    assert_difference 'UserTopicTimetrack.count' do
+      post :timetrack, { :id => "#{@topic.to_param}", :time => "12" }, { :user_id => @user.id }
+    end
+
+    assert_response :success
+  end
 end
 

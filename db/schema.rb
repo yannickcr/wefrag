@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081226115548) do
+ActiveRecord::Schema.define(:version => 20090911110637) do
 
   create_table "categories", :force => true do |t|
     t.string   "title"
@@ -172,6 +172,15 @@ ActiveRecord::Schema.define(:version => 20081226115548) do
   end
 
   add_index "user_topic_reads", ["user_id", "topic_id"], :name => "index_user_topic_reads_on_user_id_and_topic_id", :unique => true
+
+  create_table "user_topic_timetracks", :force => true do |t|
+    t.integer  "user_id",                   :null => false
+    t.integer  "topic_id",                  :null => false
+    t.datetime "tracked_at",                :null => false
+    t.integer  "spent",      :default => 0, :null => false
+  end
+
+  add_index "user_topic_timetracks", ["user_id", "topic_id", "tracked_at"], :name => "user_and_topic_and_tracked_at", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "login",                                                                                                                                   :null => false

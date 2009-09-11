@@ -1,7 +1,9 @@
 class TopicsController < ApplicationController
   before_filter :load_forum, :only   => [:new, :create]
-  before_filter :load_topic, :except => [:new, :create]
+  before_filter :load_topic, :except => [:new, :create, :timetrack]
   before_filter :load_user,  :only   => :ban
+
+  before_filter :load_topic_only, :only => :timetrack
 
   before_filter :read_required!
   before_filter :active_required!,       :only => [:read, :read_forever]
@@ -17,6 +19,8 @@ class TopicsController < ApplicationController
   before_filter :sanitize_params, :only => [:create, :update, :move]
 
   after_filter :read_topic, :only => :show
+
+  skip_before_filter :verify_authenticity_token, :only => :timetrack
 
   def show
     respond_to do |format|
@@ -115,7 +119,17 @@ class TopicsController < ApplicationController
     redirect_to @forum
   end
 
+  def timetrack
+    UserTopicTimetrack.track!(current_user, @topic, params[:time])
+    render :nothing => true
+  end
+
   protected
+
+  def load_topic_only
+    @topic = Topic.find(params[:id])
+    @forum = @topic.forum
+  end
 
   def lock_required!
     forbidden unless logged_in? && @topic.can_lock?(current_user)
