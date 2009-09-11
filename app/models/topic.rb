@@ -30,6 +30,8 @@ class Topic < Post
     memoize :for_user
   end
 
+  has_many :timetracks, :class_name => 'UserTopicTimetrack', :dependent => :delete_all
+
   has_many :replies, :class_name => 'Post',
                      :include    => :user,
                      :dependent  => :delete_all
@@ -129,5 +131,9 @@ class Topic < Post
 
   def update_last_post_at
     update_attribute(:last_post_at, posts.oldest.last.created_at)
+  end
+
+  def time_spent_by(user)
+    timetracks.for_user(user).sum(:spent) if user
   end
 end

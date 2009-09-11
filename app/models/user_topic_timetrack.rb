@@ -2,6 +2,8 @@ class UserTopicTimetrack < ActiveRecord::Base
   belongs_to :user
   belongs_to :topic
 
+  named_scope :for_user, lambda { |user| { :conditions => { :user_id => user.id } } }
+
   def self.track!(user, topic, time)
     connection.execute \
       "INSERT INTO `user_topic_timetracks` (user_id, topic_id, spent, tracked_at) " +

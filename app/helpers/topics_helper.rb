@@ -44,4 +44,11 @@ module TopicsHelper
     params = post.is_topic? ? {} : { :page => post.page, :anchor => "post_#{post.id}" }
     forum_topic_path forum, topic, params
   end
+
+  def show_topic_spent_time(topic, user)
+    if user
+      time_spent = topic.time_spent_by(user)
+      content_tag(:span, "#{distance_of_time_in_words(time_spent)} passé sur ce sujet", :class => :spent_time) if time_spent > 0
+    end
+  end
 end

@@ -211,7 +211,7 @@ table.topics td.title a.unread_post
     background-repeat: no-repeat;
     background-position: 50% 50%;
     width: 20px;
-    height: 16;
+    height: 16px;
     text-indent: -9999em;
     display: block;
     float: right;
@@ -228,6 +228,15 @@ table.topics td.title div.pages a
 table.topics div.by
 {
     overflow: hidden;
+}
+
+table.posts th.post span.spent_time
+{
+    color: #999;
+    float: right;
+    font-size: 0.9em;
+    font-weight: normal;
+    padding-right: 10px;
 }
 
 table.posts tr.even td
