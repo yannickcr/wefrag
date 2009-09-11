@@ -1,51 +1,51 @@
-$.ajaxSetup(
+jQuery.ajaxSetup(
 {
     beforeSend: function(xhr) { xhr.setRequestHeader('Accept', 'text/javascript'); }
 });
 
-$(document).ready(function()
+jQuery(document).ready(function()
 {
-    $('textarea.markitup').markItUp(mySettings);
+    jQuery('textarea.markitup').markItUp(mySettings);
 
-    if ($('table.list.forums').size() > 0)
+    if (jQuery('table.list.forums').size() > 0)
     {
-        $('a[href="/session/new"]').click(function()
+        jQuery('a[href="/session/new"]').click(function()
         {
-            $.get(this.href, function (data) { $.modal(data); $('#modalContainer input[name=login]').focus(); });
+            jQuery.get(this.href, function (data) { jQuery.modal(data); jQuery('modalContainer input[name=login]').focus(); });
             return false;
         });
     }
 
-    if ($('table.list.posts').size() > 0)
+    if (jQuery('table.list.posts').size() > 0)
     {
-        $('div.header a.move, div.footer a.move').click(function()
+        jQuery('div.header a.move, div.footer a.move').click(function()
         {
-            $.get(this.href, function (data) { $.modal(data); });
+            jQuery.get(this.href, function (data) { jQuery.modal(data); });
             return false;
         });
     }
 
-    $('div#shouts form').ajaxForm({
+    jQuery('div#shouts form').ajaxForm({
         beforeSubmit: function()
         {
-            $('div#shouts form').addClass('loading');
+            jQuery('div#shouts form').addClass('loading');
         },
         success: function()
         { 
-            $.get('/shouts', function(data)
+            jQuery.get('/shouts/box', function(data)
             {
-                $('div#shouts div.content > div.list').html(data);
+                jQuery('div#shouts div.content > div.list').html(data);
                 load_shouts();
-                $('div#shouts form').removeClass('loading');
+                jQuery('div#shouts form').removeClass('loading');
                 /* After reloading, we clear the input text. */
-                $('div#shouts form input[type="text"]').val('');
+                jQuery('div#shouts form input[type="text"]').val('');
             });
         }
     });
 
     load_shouts();
 
-    $('ul.sf-menu').superfish({
+    jQuery('ul.sf-menu').superfish({
         autoArrows: false,
         dropShadows: false,
         animation: { opacity: 'show' },
@@ -56,10 +56,10 @@ $(document).ready(function()
 
 load_shouts = function()
 {
-    $('div#shouts div.list div.msg').click(function()
+    jQuery('div#shouts div.list div.msg').click(function()
     { 
-        var field = $('div#shouts form input[type="text"]');
-        var time  = $(this).children('.time').text();
+        var field = jQuery('div#shouts form input[type="text"]');
+        var time  = jQuery(this).children('.time').text();
         var re    =  /^\d{2}:\d{2}\s/;
 
         if (field.val().match(re))

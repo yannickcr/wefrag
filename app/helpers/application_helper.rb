@@ -35,8 +35,7 @@ module ApplicationHelper
     html = []
     html << stylesheet_link_tag('screen', 'forums', 'markitup/style.css', 'markitup/sets/bbcode/style.css', 'superfish.css', :cache => true)
     html << '<!--[if IE]>' + stylesheet_link_tag('ie') + '<![endif]-->'
-    html << javascript_include_tag('jquery.min.js', 'jquery.form.js', 'jquery.markitup.js', 'jquery.simplemodal.min.js', 'markitup/sets/bbcode/set.js', 'application', :cache => true)
-    html << javascript_include_tag('hoverIntent', 'superfish.js')
+    html << javascript_include_tag('jquery.min.js', 'jquery.noconflict.js', 'jquery.form.js', 'jquery.markitup.js', 'jquery.simplemodal.min.js', 'markitup/sets/bbcode/set.js', 'application', 'hoverIntent', 'superfish', 'prototype', 'time_tracker', :cache => true)
     html.join "\n"
   end
 end
