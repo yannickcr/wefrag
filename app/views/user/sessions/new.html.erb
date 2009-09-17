@@ -4,7 +4,7 @@
 
 <%= content_tag(:div, 'Identifiant ou mot de passe incorrect', :class => :errorExplanation) if request.post? %>
 
-<% form_tag session_path do %>
+<% form_tag user_session_path do %>
   <div class="span-4">
     Identifiant :
   </div>

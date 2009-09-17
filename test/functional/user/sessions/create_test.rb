@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require File.dirname(__FILE__) + '/../../../test_helper'
 
-class SessionsCreateTest < ActionController::TestCase
-  tests SessionsController
+class User::SessionsCreateTest < ActionController::TestCase
+  tests User::SessionsController
 
   def setup
     @request.remote_addr = '1.2.3.4'

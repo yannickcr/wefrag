@@ -12,7 +12,7 @@ class PasswordResetTest < ActionController::IntegrationTest
   end 
 
   def test_new_password
-    get_via_redirect '/session'
+    get_via_redirect '/user/session'
     assert_response :success
     assert_select 'a[href=?]', new_user_password_path
 

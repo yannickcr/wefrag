@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
-class UserPasswordTest < ActionController::TestCase
-  tests User::PasswordController
+class User::PasswordControllerTest < ActionController::TestCase
 
   def setup
     @request.remote_addr = '1.2.3.4'

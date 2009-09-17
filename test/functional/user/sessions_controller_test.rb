@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/../../test_helper'
 
-class SessionsControllerTest < ActionController::TestCase
+class User::SessionsControllerTest < ActionController::TestCase
   def setup
     @request.remote_addr = '1.2.3.4'
     @user = users(:joe)
@@ -9,7 +9,7 @@ class SessionsControllerTest < ActionController::TestCase
   test 'on GET to :show' do
     get :show
     assert_response :redirect
-    assert_redirected_to new_session_path
+    assert_redirected_to new_user_session_path
   end
 
   test 'on GET to :new' do
@@ -18,7 +18,7 @@ class SessionsControllerTest < ActionController::TestCase
     assert_response :success
     assert_template 'new'
 
-    assert_select 'form[action=?] input', session_path do
+    assert_select 'form[action=?] input', user_session_path do
       assert_select '[name=?]', 'login'
       assert_select '[name=?]', 'password'
     end
@@ -32,7 +32,7 @@ class SessionsControllerTest < ActionController::TestCase
     assert_equal @response.content_type, Mime::JS
 
     assert_no_tag :tag => 'html'
-    assert_tag :tag => 'form', :attributes => { :action => session_path }
+    assert_tag :tag => 'form', :attributes => { :action => user_session_path }
     assert_tag :tag => 'input', :attributes => { :name => 'login' }
     assert_tag :tag => 'input', :attributes => { :name => 'password' }
   end

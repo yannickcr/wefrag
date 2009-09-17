@@ -1,5 +1,5 @@
 module UsersHelper
   def user_actions(user)
-    link_to('Déconnexion', session_path, :method => :delete)
+    link_to('Déconnexion', user_session_path, :method => :delete)
   end
 end

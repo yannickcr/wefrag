@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
       render :text => 'forbidden', :status => 403
     else
       flash[:notice] = 'Vous devez être identifié pour accéder à cette page'
-      redirect_to new_session_url
+      redirect_to new_user_session_url
     end
     false
   end

@@ -10,22 +10,21 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :users, :member => { :confirm => :any }, :active_scaffold => true
   end
 
-  # User
-  map.resource :session, :except => [ :edit, :update ]
-
+  # User(s)
   map.resource :user, :controller => 'user'
+
+  map.namespace :user do |user|
+    user.resource  :session,  :except => [:edit, :update]
+    user.resources :password, :except => [:edit, :update, :destroy]
+  end
+
   map.with_options :controller => 'user', :requirements => { :code => /[a-f0-9]{32,64}/ } do |user|
     user.confirm_user 'user/:code',        :action => 'confirm'
     user.cancel_user  'user/:code/cancel', :action => 'cancel'
   end
 
-  map.with_options :controller => 'users', :action => 'show', :requirements => { :id => /[a-zA-Z0-9_\-]+/ } do |user|
-    user.show_user 'users/:id'
-  end
+  map.show_user 'users/:id', :controller => 'users', :action => 'show', :requirements => { :id => /[a-zA-Z0-9_\-]+/ }
 
-  map.namespace :user do |user|
-    user.resources :password, :except => [:edit, :update, :destroy]
-  end
 
   # Search
   map.with_options :controller => 'search', :action => 'new' do |s|

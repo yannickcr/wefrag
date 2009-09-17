@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require File.dirname(__FILE__) + '/../../../test_helper'
 
-class UserPasswordRoutingTest < ActionController::TestCase
+class User::PasswordRoutingTest < ActionController::TestCase
   tests User::PasswordController
 
   def setup
