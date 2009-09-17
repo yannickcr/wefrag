@@ -23,6 +23,10 @@ ActionController::Routing::Routes.draw do |map|
     user.show_user 'users/:id'
   end
 
+  map.namespace :user do |user|
+    user.resources :password, :except => [:edit, :update, :destroy]
+  end
+
   # Search
   map.with_options :controller => 'search', :action => 'new' do |s|
     s.searches   'search', :conditions => { :method => :post }, :action => 'create'

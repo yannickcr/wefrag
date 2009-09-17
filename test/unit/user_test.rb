@@ -1,6 +1,28 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
+  def test_should_find_user_by_login
+    user = users(:passive)
+    found = User.find_by_login_or_email(user.login)
+
+    assert_not_nil found, 'User found'
+    assert_equal found, user, 'Right user found'
+  end
+
+  def test_should_find_user_by_email
+    user = users(:passive)
+    found = User.find_by_login_or_email(user.email)
+
+    assert_not_nil found, 'User found'
+    assert_equal found, user, 'Right user found'
+  end
+
+  def test_should_not_find_user_by_bad_login_or_email
+    found = User.find_by_login_or_email('notfound')
+
+    assert_nil found, 'User not found'
+  end
+
   def test_should_be_passive
     assert users(:passive).passive?, 'User is not passive'
     assert !users(:passive).active?, 'User is active'

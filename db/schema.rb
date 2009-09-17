@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090911110637) do
+ActiveRecord::Schema.define(:version => 20090917094652) do
 
   create_table "categories", :force => true do |t|
     t.string   "title"
@@ -131,6 +131,17 @@ ActiveRecord::Schema.define(:version => 20090911110637) do
 
   add_index "shouts", ["created_at"], :name => "index_shouts_on_created_at"
 
+  create_table "user_actions", :force => true do |t|
+    t.integer  "user_id",                                                              :null => false
+    t.enum     "action",     :limit => [:new_password, :change_email],                 :null => false
+    t.string   "code",       :limit => 40,                                             :null => false
+    t.string   "data",                                                 :default => "", :null => false
+    t.datetime "expires_at"
+  end
+
+  add_index "user_actions", ["action", "code"], :name => "index_user_actions_on_action_and_code", :unique => true
+  add_index "user_actions", ["user_id"], :name => "index_user_actions_on_user_id"
+
   create_table "user_infos", :force => true do |t|
     t.integer  "user_id",                       :null => false
     t.string   "steam_id"
@@ -153,6 +164,14 @@ ActiveRecord::Schema.define(:version => 20090911110637) do
   end
 
   add_index "user_openid_trusts", ["user_id", "trust_root"], :name => "index_user_openid_trusts_on_user_id_and_trust_root"
+
+  create_table "user_password_resets", :force => true do |t|
+    t.integer "user_id",                                                                          :null => false
+    t.string  "code",    :limit => 40,                                                            :null => false
+    t.enum    "state",   :limit => [:created, :sent, :confirmed, :changed], :default => :created, :null => false
+  end
+
+  add_index "user_password_resets", ["code"], :name => "index_user_password_resets_on_code", :unique => true
 
   create_table "user_topic_infos", :force => true do |t|
     t.integer  "user_id",                      :null => false

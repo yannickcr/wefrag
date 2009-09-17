@@ -22,6 +22,7 @@ Rails::Initializer.run do |config|
   config.gem "rmagick", :lib => "RMagick"
 
   config.active_record.observers = :user_observer,
+                                   'user/password_reset_observer',
                                    :post_observer,
                                    :topic_observer
 

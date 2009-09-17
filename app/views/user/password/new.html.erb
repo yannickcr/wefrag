@@ -1,0 +1,18 @@
+<div class="header">
+  <%= breadcrumb nil, nil, nil, 'Demande de nouveau mot de passe' %>
+</div>
+
+<%= content_tag(:div, 'Identifiant ou adresse e-mail incorrect', :class => :errorExplanation) if request.post? %>
+
+<% form_tag user_password_index_path do %>
+  <div class="span-4">
+    Identifiant ou adresse e-mail :
+  </div>
+  <div class="last">
+    <%= text_field_tag :login_or_email, h(params[:login_or_email]), :class => :text %>
+  </div>
+  <div class="prepend-4 last">
+    <%= submit_tag 'Valider', :class => :submit %>
+  </div>
+<% end %>
+

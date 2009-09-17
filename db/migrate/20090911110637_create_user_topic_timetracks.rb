@@ -2,8 +2,8 @@ class CreateUserTopicTimetracks < ActiveRecord::Migration
   def self.up
     create_table :user_topic_timetracks do |table|
       table.with_options :null => false do |t|
-        t.integer  :user_id
-        t.integer  :topic_id
+        t.belongs_to :user
+        t.belongs_to :topic
         t.datetime :tracked_at
         t.integer  :spent, :default => 0
       end

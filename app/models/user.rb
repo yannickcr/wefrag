@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   has_many :topics
   has_many :posts
 
+  has_many :password_resets
+
   has_many :reads, :class_name => 'UserTopicRead'
   has_many :topic_infos, :class_name => 'UserTopicInfo' do
     def can_reply?(topic, *args)
@@ -57,6 +59,8 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :email, :case_sensitive => false, :on => :create
   validates_uniqueness_of :email, :case_sensitive => false, :on => :update, :if => :email_changed?
+
+  @reset_password = false
 
   validates_presence_of     :password,                :if => :password_required?
   validates_presence_of     :password_confirmation,   :if => :password_required?, :on => :update
@@ -150,6 +154,10 @@ class User < ActiveRecord::Base
 
   def self.find_by_param(login)
     find_by_login(URI.unescape("#{login}"))
+  end
+
+  def self.find_by_login_or_email(login_or_email)
+    find :first, :conditions => ['`users`.login = ? or `users`.email = ?', login_or_email, login_or_email]
   end
 
   def has_email_alias?
@@ -312,6 +320,16 @@ class User < ActiveRecord::Base
     Rails.cache.delete "User(#{id})"
   end
 
+  def request_new_password!
+    password_resets.create!
+  end
+
+  def make_new_password!
+    @reset_password = true
+    set_random_password
+    save!
+  end
+
   protected
 
   def do_activate
@@ -333,7 +351,11 @@ class User < ActiveRecord::Base
   end
     
   def password_required?
-    crypted_password.blank? or !password.blank?
+    if @reset_password
+      false
+    else
+      crypted_password.blank? or !password.blank?
+    end
   end
   
   def make_confirmation_code
