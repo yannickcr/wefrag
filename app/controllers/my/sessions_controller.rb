@@ -1,4 +1,4 @@
-class User::SessionsController < ApplicationController
+class My::SessionsController < ApplicationController
   def show
     redirect_to :action => :new
   end

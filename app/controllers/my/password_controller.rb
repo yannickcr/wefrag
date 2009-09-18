@@ -1,4 +1,4 @@
-class User::PasswordController < ApplicationController
+class My::PasswordController < ApplicationController
   before_filter :load_password_reset, :only => :show
 
   def index

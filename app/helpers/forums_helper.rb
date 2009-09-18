@@ -12,7 +12,7 @@ module ForumsHelper
   def forums_actions(user)
     html = []
     if user
-      html << link_to('Déconnexion', user_session_path, :method => :delete)
+      html << link_to('Déconnexion', my_session_path, :method => :delete)
     end
     html << link_to('Rechercher', new_search_path)
     if user
@@ -20,7 +20,7 @@ module ForumsHelper
       html << link_to('Administration', admin_forums_path, :class => :admin) if user.can_admin?
       html << link_to(h(truncate(user.login, :length => 15)), user_path, :class => :user)
     else
-      html << link_to('Identification', new_user_session_path, :class => :new_user_session)
+      html << link_to('Identification', new_my_session_path, :class => :new_my_session)
       html << link_to('Ouvrir un compte', new_user_path)
     end
     html.join ' '

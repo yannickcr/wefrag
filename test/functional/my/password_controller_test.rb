@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
-class User::PasswordControllerTest < ActionController::TestCase
+class My::PasswordControllerTest < ActionController::TestCase
 
   def setup
     @request.remote_addr = '1.2.3.4'
@@ -12,7 +12,7 @@ class User::PasswordControllerTest < ActionController::TestCase
     get :index
 
     assert_response :redirect
-    assert_redirected_to new_user_password_url
+    assert_redirected_to new_my_password_url
   end
 
   test 'on GET to :new' do
@@ -21,7 +21,7 @@ class User::PasswordControllerTest < ActionController::TestCase
     assert_response :success
     assert_template :new
 
-    assert_select 'form[action=?] input', user_password_index_path do
+    assert_select 'form[action=?] input', my_password_index_path do
       assert_select '[name=?]', 'login_or_email'
     end
   end

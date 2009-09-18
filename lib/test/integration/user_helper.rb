@@ -10,16 +10,16 @@ module Test
       end
 
       def login(login = 'root', password = 'root')
-        get '/user/session/new'
+        get '/my/session/new'
         assert_response :success
 
-        post_via_redirect '/user/session', :login => login, :password => password
+        post_via_redirect '/my/session', :login => login, :password => password
         assert_equal '/forums', path
         assert_match /maintenant identifié/, flash[:notice]
       end
 
       def logout
-        delete_via_redirect '/user/session'
+        delete_via_redirect '/my/session'
         assert_equal '/forums', path
         assert_match /plus identifié/, flash[:notice]
       end

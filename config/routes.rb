@@ -13,9 +13,10 @@ ActionController::Routing::Routes.draw do |map|
   # User(s)
   map.resource :user, :controller => 'user'
 
-  map.namespace :user do |user|
-    user.resource  :session,  :except => [:edit, :update]
-    user.resources :password, :except => [:edit, :update, :destroy]
+  map.namespace :my do |my|
+    my.resource  :session,    :except => [:edit, :update]
+    my.resources :password,   :except => [:edit, :update, :destroy]
+    my.resources :activation, :only   => :show, :member => { :cancel => :get }
   end
 
   map.with_options :controller => 'user', :requirements => { :code => /[a-f0-9]{32,64}/ } do |user|

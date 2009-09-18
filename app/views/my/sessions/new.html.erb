@@ -4,7 +4,7 @@
 
 <%= content_tag(:div, 'Identifiant ou mot de passe incorrect', :class => :errorExplanation) if request.post? %>
 
-<% form_tag user_session_path do %>
+<% form_tag my_session_path do %>
   <div class="span-4">
     Identifiant :
   </div>
@@ -20,7 +20,7 @@
   <div class="prepend-4 last">
     <%= submit_tag 'Identifier', :class => :submit %>
     <%= link_to 'Ouvrir un compte', new_user_path %> |
-    <%= link_to 'mot de passe oublié', new_user_password_path %>
+    <%= link_to 'mot de passe oublié', new_my_password_path %>
   </div>
 <% end %>
 

@@ -9,7 +9,7 @@ jQuery(document).ready(function()
 
     if (jQuery('table.list.forums').size() > 0)
     {
-        jQuery('a.new_user_session').click(function()
+        jQuery('a.new_my_session').click(function()
         {
             jQuery.get(this.href, function(data) { jQuery.modal(data); jQuery('.modalContainer input[name=login]').focus(); });
             return false;
