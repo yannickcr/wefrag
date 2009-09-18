@@ -120,7 +120,7 @@ class TopicsController < ApplicationController
   end
 
   def timetrack
-    UserTopicTimetrack.track!(current_user, @topic, params[:time])
+    UserTopicTimetrack.track!(current_user, @topic, params[:time]) if logged_in?
     render :nothing => true
   end
 
