@@ -72,27 +72,4 @@ class UserControllerTest < ActionController::TestCase
     assert_redirected_to forums_path
     assert_match /supprimé/, flash[:notice]
   end
-
-  test 'on GET to :confirm' do
-    assert_difference 'User.pending.count', -1 do
-      assert_difference 'User.confirmed.count' do
-        get :confirm, { :code => @pending_user.confirmation_code }
-      end
-    end
-
-    assert_response :redirect
-    assert_redirected_to :action => :edit
-    assert_equal session[:user_id], @pending_user.id
-    assert_match /confirmée/, flash[:notice]
-  end
-
-  test 'on GET to :cancel' do
-    assert_difference 'User.count', -1 do
-      get :cancel, { :code => @pending_user.confirmation_code }
-    end
-
-    assert_response :redirect
-    assert_redirected_to forums_path
-    assert_match /annulée/, flash[:notice]
-  end
 end

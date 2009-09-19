@@ -3,10 +3,6 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class UserRoutingTest < ActionController::TestCase
   tests UserController
 
-  def setup
-    @confirmation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
-  end 
-
   test 'route to :show' do
     assert_routing '/user', { :controller => 'user', :action => 'show' }
   end
@@ -31,28 +27,12 @@ class UserRoutingTest < ActionController::TestCase
     assert_routing({ :path => '/user', :method => :delete }, { :controller => 'user', :action => 'destroy' })
   end
 
-  test 'route to :confirm' do
-    assert_routing "/user/#{@confirmation_code}", { :controller => 'user', :action => 'confirm', :code => @confirmation_code }
-  end
-
-  test 'route to :cancel' do
-    assert_routing "/user/#{@confirmation_code}/cancel", { :controller => 'user', :action => 'cancel', :code => @confirmation_code }
-  end
-
   test 'helper to :show' do
     assert_equal '/user', user_path
   end
 
   test 'helper to :new' do
     assert_equal '/user/new', new_user_path
-  end
-
-  test 'helper to :confirm' do
-    assert_equal "/user/#{@confirmation_code}", confirm_user_path(@confirmation_code)
-  end
-
-  test 'helper to :cancel' do
-    assert_equal "/user/#{@confirmation_code}/cancel", cancel_user_path(@confirmation_code)
   end
 end
 

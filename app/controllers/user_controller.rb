@@ -1,11 +1,7 @@
 class UserController < ApplicationController
-
-  before_filter :user_required!, :only => [:show, :edit, :update, :destroy]
-
+  before_filter :user_required!,    :only => [:show, :edit, :update, :destroy]
   before_filter :load_current_user, :only => [:edit, :update, :destroy]
-  before_filter :load_pending_user, :only => [:confirm, :cancel]
-
-  before_filter :sanitize_params, :only => [:create, :update]
+  before_filter :sanitize_params,   :only => [:create, :update]
 
   def show
     redirect_to :action => :edit
@@ -66,20 +62,6 @@ class UserController < ApplicationController
     redirect_to forums_url
   end
 
-  def confirm
-    @user.notify!
-    @user.confirm!
-    flash[:notice] = 'Votre adresse e-mail a été confirmée, vous êtes maintenant identifié. Votre compte est actif.'
-    self.current_user = @user 
-    redirect_to :action => :edit
-  end
-
-  def cancel
-    @user.cancel!
-    flash[:notice] = 'Votre demande d\'inscription a été annulée.'
-    redirect_to forums_url
-  end
-
   protected
 
   def load_current_user
@@ -95,13 +77,5 @@ class UserController < ApplicationController
 
   def user_confirmed_required!
     forbidden unless @user.confirmed?
-  end
-
-  def load_pending_user
-    @user = User.pending.find_by_confirmation_code(params[:code])
-    unless @user
-      redirect_to logged_in? ? user_url : forums_url
-      return false
-    end
   end
 end

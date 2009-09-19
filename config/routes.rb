@@ -12,20 +12,13 @@ ActionController::Routing::Routes.draw do |map|
 
   # User(s)
   map.resource :user, :controller => 'user'
+  map.resources :users, :name_prefix => :show_, :only => :show
 
   map.namespace :my do |my|
     my.resource  :session,    :except => [:edit, :update]
     my.resources :password,   :except => [:edit, :update, :destroy]
-    my.resources :activation, :only   => :show, :member => { :cancel => :get }
+    my.resources :activation, :only   => :show
   end
-
-  map.with_options :controller => 'user', :requirements => { :code => /[a-f0-9]{32,64}/ } do |user|
-    user.confirm_user 'user/:code',        :action => 'confirm'
-    user.cancel_user  'user/:code/cancel', :action => 'cancel'
-  end
-
-  map.show_user 'users/:id', :controller => 'users', :action => 'show', :requirements => { :id => /[a-zA-Z0-9_\-]+/ }
-
 
   # Search
   map.with_options :controller => 'search', :action => 'new' do |s|
@@ -42,7 +35,7 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
 
-  map.resources :topics, :only => :timetrack, :member => { :timetrack => :post }
+  map.resources :topics, :only => :none, :member => { :timetrack => :post }
 
   map.ban_forum_topic 'forums/:forum_id/topics/:id/ban/:user_id', :controller => 'topics', :action => 'ban', :requirements => { :forum_id => /[a-zA-Z0-9_\-]+/, :id => /[1-9]\d*/, :user_id => /[1-9]\d*/ }, :conditions => { :method => :post }
   map.preview_post 'posts/preview', :controller => 'posts', :action => 'preview'

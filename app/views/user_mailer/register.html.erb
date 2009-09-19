@@ -3,7 +3,7 @@ Bonjour,
 Vous venez de créer un compte sur Wefrag, vous devez cliquer
 sur le lien ci-dessous pour confirmer sa création :
 
-<%= confirm_user_url :code => @user.confirmation_code %>
+<%= my_activation_url(@user.confirmation_code) %>
 
 Vous pourrez ensuite vous identifiez avec votre identifiant :
 
