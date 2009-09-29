@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 
   has_one :info, :class_name => 'UserInfo'
 
+  has_one :mumble
+
   delegate :rights, :to => :group
   delegate :forum_rights, :to => :group
 

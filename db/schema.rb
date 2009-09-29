@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090917094652) do
+ActiveRecord::Schema.define(:version => 20090929075556) do
 
   create_table "categories", :force => true do |t|
     t.string   "title"
@@ -131,17 +131,6 @@ ActiveRecord::Schema.define(:version => 20090917094652) do
 
   add_index "shouts", ["created_at"], :name => "index_shouts_on_created_at"
 
-  create_table "user_actions", :force => true do |t|
-    t.integer  "user_id",                                                              :null => false
-    t.enum     "action",     :limit => [:new_password, :change_email],                 :null => false
-    t.string   "code",       :limit => 40,                                             :null => false
-    t.string   "data",                                                 :default => "", :null => false
-    t.datetime "expires_at"
-  end
-
-  add_index "user_actions", ["action", "code"], :name => "index_user_actions_on_action_and_code", :unique => true
-  add_index "user_actions", ["user_id"], :name => "index_user_actions_on_user_id"
-
   create_table "user_infos", :force => true do |t|
     t.integer  "user_id",                       :null => false
     t.string   "steam_id"
@@ -155,6 +144,13 @@ ActiveRecord::Schema.define(:version => 20090917094652) do
   end
 
   add_index "user_infos", ["user_id"], :name => "index_user_infos_on_user_id", :unique => true
+
+  create_table "user_mumbles", :force => true do |t|
+    t.integer "user_id",                :null => false
+    t.string  "password", :limit => 40, :null => false
+  end
+
+  add_index "user_mumbles", ["user_id"], :name => "index_user_mumbles_on_user_id", :unique => true
 
   create_table "user_openid_trusts", :force => true do |t|
     t.integer  "user_id",    :null => false

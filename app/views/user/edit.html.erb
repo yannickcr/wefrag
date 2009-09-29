@@ -47,6 +47,15 @@
           <%= check_box :user_info, :is_email %> ?
         </div>
 
+        <% if @user.mumble %>
+        <div class="span-4">
+          Accès au serveur mumble :
+        </div>
+        <div class="span-20 last">
+          <%= link_to @user.mumble, "#{@user.mumble.url_with_password}" %>
+        </div>
+        <%end %>
+
         <% elsif @user.confirmed? %>
 
         <div class="span-4">
