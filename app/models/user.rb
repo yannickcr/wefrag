@@ -5,8 +5,7 @@ class User < ActiveRecord::Base
   belongs_to :group
   belongs_to :image
 
-  has_one :info, :class_name => 'UserInfo'
-
+  has_one :info
   has_one :mumble
 
   delegate :rights, :to => :group

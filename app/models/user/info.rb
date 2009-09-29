@@ -1,4 +1,4 @@
-class UserInfo < ActiveRecord::Base
+class User::Info < ActiveRecord::Base
   belongs_to :user
 
   attr_accessible :steam_id, :xboxlive_id, :psn_id,
