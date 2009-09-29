@@ -14,7 +14,12 @@ if defined?(Ultrasphinx)
     :weights     => {},
     :class_names => [],
     :filters     => {},
-    :facets      => []
+    :facets      => [],
+    :location    => HashWithIndifferentAccess.new({                                                                                                                   
+      :lat_attribute_name  => 'lat',
+      :long_attribute_name => 'lng',
+      :units               => 'radians'
+    })
   })
 
   Ultrasphinx::Search.excerpting_options = HashWithIndifferentAccess.new({
