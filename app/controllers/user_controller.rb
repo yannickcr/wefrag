@@ -12,6 +12,8 @@ class UserController < ApplicationController
   end
 
   def create
+    render :text => "Inscriptions désactivées jusqu'au 29 janvier" and return
+
     @user = User.new do |u|
       u.login = params[:user][:login]
       u.email = params[:user][:email]
