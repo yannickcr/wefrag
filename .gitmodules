@@ -31,6 +31,3 @@
 [submodule "vendor/plugins/ultrasphinx"]
 	path = vendor/plugins/ultrasphinx
 	url = git://github.com/fauna/ultrasphinx.git
-[submodule "vendor/plugins/acts_as_state_machine"]
-	path = vendor/plugins/acts_as_state_machine
-	url = git://github.com/jmonteiro/acts_as_state_machine.git
