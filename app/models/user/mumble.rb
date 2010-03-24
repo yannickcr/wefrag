@@ -12,7 +12,7 @@ class User::Mumble < ActiveRecord::Base
   end
 
   def url_with_password
-    "mumble://#{user}:#{password}@wefrag.com"
+    "mumble://#{user}:#{password}@wefrag.com/?version=1.2.0"
   end
 
   def password_sha1
