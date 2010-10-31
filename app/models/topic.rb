@@ -23,11 +23,11 @@ class Topic < Post
 
   has_many :reads, :class_name => 'UserTopicRead', :dependent => :delete_all do
     def for_user(user)
-      find_by_user_id(user.id) if user
+      return false unless user
+      Rails.cache.fetch "UserTopicRead:#{user.id}:#{proxy_owner.id}", :expires_in => 1.second do
+        find_by_user_id(user.id) || false
+      end
     end
-
-    extend ActiveSupport::Memoizable
-    memoize :for_user
   end
 
   has_many :timetracks, :class_name => 'UserTopicTimetrack', :dependent => :delete_all
