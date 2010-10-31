@@ -40,9 +40,9 @@ class Forum < ActiveRecord::Base
       )
 
     if post
-      return true
-    else
       return false
+    else
+      return true
     end
   end
 
