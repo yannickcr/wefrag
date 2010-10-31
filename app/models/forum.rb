@@ -32,11 +32,18 @@ class Forum < ActiveRecord::Base
 
   def is_read_by?(user)
     return true unless user
-    posts.count(
+
+    post = posts.first(
       :id,
       :joins => "LEFT OUTER JOIN `user_topic_reads` ON `user_topic_reads`.topic_id = IFNULL(`posts`.topic_id, `posts`.id) AND `user_topic_reads`.user_id = #{user.id}",
       :conditions => ['`posts`.created_at > ? AND (`user_topic_reads`.user_id IS NULL OR (`user_topic_reads`.is_forever = ? AND `user_topic_reads`.read_at < `posts`.created_at))', user.created_at, 0]
-      ) == 0
+      )
+
+    if post
+      return true
+    else
+      return false
+    end
   end
 
   # Misc
