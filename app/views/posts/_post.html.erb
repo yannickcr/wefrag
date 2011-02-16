@@ -6,6 +6,19 @@
   </td>
   <td class="content span-20 last">
     <div class="body">
+      <% if post.user.login == 'nofrag' %>
+<div style="float: right"><script type="text/javascript">
+sas_tmstp=Math.round(Math.random()*10000000000);sas_masterflag=1;
+function SmartAdServer(sas_pageid,sas_formatid,sas_target) {
+if (sas_masterflag==1) {sas_masterflag=0;sas_master='M';} else
+{sas_master='S';};
+document.write('<scr'+'ipt SRC="http://www.smartadserver.com/call/pubj/'+sas_pageid+'/'+sas_formatid+'/'+sas_master+'/'+sas_tmstp+'/'+escape(sas_target)+'?"></scr'+'ipt>'); }
+sas_pageid='3062/21733';      // Page : gebecom/nofrag/hp
+sas_formatid=922;             // Format : Pave250 250x250
+sas_target='';                // Targeting
+SmartAdServer(sas_pageid,sas_formatid,sas_target);
+</script></div>
+      <% end %>
       <%= format_text post.body %>
     </div>
     <div class="info">
