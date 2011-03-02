@@ -1,11 +1,11 @@
 class TopicsController < ApplicationController
   before_filter :load_forum, :only   => [:new, :create]
-  before_filter :load_topic, :except => [:new, :create, :timetrack]
+  before_filter :load_topic, :except => [:new, :create, :timetrack, :unread]
   before_filter :load_user,  :only   => :ban
 
   before_filter :load_topic_only, :only => :timetrack
 
-  before_filter :read_required!
+  before_filter :read_required!,         :except => :unread
   before_filter :active_required!,       :only => [:read, :read_forever]
   before_filter :post_required!,         :only => [:new, :create]
   before_filter :topic_edit_required!,   :only => [:edit, :update]
@@ -35,6 +35,16 @@ class TopicsController < ApplicationController
         @posts = @topic.posts.oldest.all(:order => '`posts`.created_at DESC', :limit => 25)
       end
     end
+  end
+  
+  def unread
+    @unread_posts = Post.paginate(:page => params[:page], :per_page => Post.per_page, 
+                                  :select => 'posts.*',
+                                  :from => 'posts, users, group_forum_rights ',
+                                  :order => 'posts.updated_at DESC',
+                                  :conditions => "users.id =#{current_user.id} AND users.group_id = group_forum_rights.group_id AND group_forum_rights.is_read = 1 AND group_forum_rights.forum_id = posts.forum_id AND ((title != '' AND posts.id NOT IN (SELECT user_topic_reads.topic_id FROM user_topic_reads WHERE user_topic_reads.user_id = #{current_user.id} AND (user_topic_reads.read_at >= posts.created_at OR user_topic_reads.is_forever = 1))) OR (title = '' AND posts.topic_id NOT IN (SELECT user_topic_reads.topic_id FROM user_topic_reads WHERE user_topic_reads.user_id =#{current_user.id} AND (user_topic_reads.read_at >= posts.created_at OR user_topic_reads.is_forever = 1))))")
+    raise WillPaginate::InvalidPage.new(params[:page], params[:page].to_i) if @unread_posts.out_of_bounds? && @unread_posts.current_page > 1
+    render :template => 'topics/posts'
   end
 
   def new

@@ -19,6 +19,8 @@ ActionController::Routing::Routes.draw do |map|
     my.resources :password,   :except => [:edit, :update, :destroy]
     my.resources :activation, :only   => :show
   end
+  
+  map.connect 'unread', :controller => 'topics', :action => 'unread'
 
   # Search
   map.with_options :controller => 'search', :action => 'new' do |s|

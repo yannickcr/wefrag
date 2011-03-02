@@ -42,6 +42,10 @@ module TopicsHelper
 
   def to_post_path(forum, topic, post)
     params = post.is_topic? ? {} : { :page => post.page, :anchor => "post_#{post.id}" }
+    # in case post is topic and we've set topic via post.topic
+    if topic.topic_id.nil? and post.is_topic?
+      topic = Topic.find(post.id)
+    end
     forum_topic_path forum, topic, params
   end
 

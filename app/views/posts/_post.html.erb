@@ -1,4 +1,4 @@
-<% content_tag_for(:tr, post, :class => cycle(:odd, :even) + post_class(topic, post, current_user)) do %>
+<% content_tag_for(:tr, post, :class => cycle(:odd, :even) + (action_class == 'unread' ? 'unread' : post_class(topic, post, current_user) ) ) do %>
   <td class="info span-4">
     <div class="user">
       <%= user_login post.user %>
@@ -22,11 +22,17 @@ SmartAdServer(sas_pageid,sas_formatid,sas_target);
       <%= format_text post.body %>
     </div>
     <div class="info">
-      <div class="<%= action_class %>">
-        <%= post_edit forum, topic, post, current_user %>
-      </div>
+      <% if action_class == 'unread' %>
+        <div class="actions">
+          <%= link_to 'Topic', to_post_path(post.topic.forum, post.topic, post) %>
+        </div>
+      <% else %>
+        <div class="<%= action_class %>">
+          <%= post_edit forum, topic, post, current_user %>
+        </div>
+      <% end %>
       <div class="date">
-        <%= link_to post.created_at.strftime('%d/%m/%Y à %Hh%M'), to_post_path(forum, topic, post) %>
+        <%= link_to post.created_at.strftime('%d/%m/%Y à %Hh%M'), to_post_path(post.topic.forum, post.topic, post) %>
       </div>
     </div>
   </td>
