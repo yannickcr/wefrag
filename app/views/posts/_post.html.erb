@@ -26,7 +26,7 @@ SmartAdServer(sas_pageid,sas_formatid,sas_target);
         <%= post_edit forum, topic, post, current_user %>
       </div>
       <div class="date">
-        <%= post.created_at.strftime('%d/%m/%Y à %Hh%M') %>
+        <%= link_to post.created_at.strftime('%d/%m/%Y à %Hh%M'), to_post_path(forum, topic, post) %>
       </div>
     </div>
   </td>

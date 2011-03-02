@@ -326,6 +326,11 @@ table.posts td.content div.info div.date
     text-align: right;
 }
 
+table.posts td.content div.info div.date a
+{
+    color: black;
+}
+
 div.header,
 div.footer
 {
