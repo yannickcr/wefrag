@@ -1,7 +1,7 @@
 namespace :users do
   desc 'Clean pending users'
   task(:clean_pending => :environment) do
-    ActionMailer::Base.default_url_options[:host] = 'wefrag.com'
+    ActionMailer::Base.default_url_options[:host] = 'forum.nofrag.com'
     count = 0
 
     User.find(:all, 
@@ -17,7 +17,7 @@ namespace :users do
 
   desc 'Clean uncomplete users'
   task(:clean_uncomplete => :environment) do
-    ActionMailer::Base.default_url_options[:host] = 'wefrag.com'
+    ActionMailer::Base.default_url_options[:host] = 'forum.nofrag.com'
     count = 0
 
     User.find(:all, 
@@ -35,7 +35,7 @@ namespace :users do
 
   desc 'Clean refused users'
   task(:clean_refused => :environment) do
-    ActionMailer::Base.default_url_options[:host] = 'wefrag.com'
+    ActionMailer::Base.default_url_options[:host] = 'forum.nofrag.com'
     count = 0
 
     User.find(:all, 

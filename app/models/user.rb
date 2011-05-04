@@ -170,7 +170,7 @@ class User < ActiveRecord::Base
   end
 
   def openid_identity
-    "http://www.wefrag.com/users/#{to_param}"
+    "http://forum.nofrag.com/users/#{to_param}"
   end
 
   def attributes_from_input=(data)
@@ -198,7 +198,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_openid(identity)
-    if match = identity.match(/^http:\/\/www\.wefrag\.com\/users\/([a-zA-Z0-9_\-]+)$/)
+    if match = identity.match(/^http:\/\/forum\.nofrag\.com\/users\/([a-zA-Z0-9_\-]+)$/)
       find_by_param(match[1])
     else
       nil

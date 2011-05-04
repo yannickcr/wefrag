@@ -1,5 +1,5 @@
 class User::PasswordResetMailer < ActionMailer::Base
-  default_url_options[:host] = 'www.wefrag.com'
+  default_url_options[:host] = 'forum.nofrag.com'
 
   def create(pr)
     setup pr

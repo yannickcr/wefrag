@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default_url_options[:host] = 'www.wefrag.com'
+  default_url_options[:host] = 'forum.nofrag.com'
 
   def register(user)
     setup user
