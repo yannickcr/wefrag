@@ -11,8 +11,7 @@
   </td>
   <% else %>
   <tr>
-    <th class="author span-4">Auteur</th>
-    <th class="post span-20 last">Message</th>
+    <th class="post span-24 last">Message</th>
   </tr>
     <%= render :partial => @unread_posts, :locals => { :forum => nil, :topic => nil, :action_class => 'unread' } %>
   <% end%>

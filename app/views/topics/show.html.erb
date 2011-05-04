@@ -6,8 +6,7 @@
 <div class="span-24">
 <table class="list posts">
   <tr>
-    <th class="author span-4">Auteur</th>
-    <th class="post span-20 last">Message <%= show_topic_spent_time(@topic, current_user) %></th>
+    <th class="post span-2 last">Message <%= show_topic_spent_time(@topic, current_user) %></th>
   </tr>
   <%= render :partial => @posts, :locals => { :forum => @forum, :topic => @topic, :action_class => 'actions' } %>
 </table>

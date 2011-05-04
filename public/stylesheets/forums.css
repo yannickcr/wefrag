@@ -299,6 +299,11 @@ table.posts td.content div.body
     width: 750px;
 }
 
+table.posts td.content div.body span.login
+{
+    font-weight: bold;
+}
+
 div.post_preview div.body p img,
 table.posts td.content div.body p img
 {
@@ -328,8 +333,8 @@ table.posts td.content div.info div.date
 
 table.posts td.content div.info div.date a
 {
-    color: black;
 }
+
 
 div.header,
 div.footer
