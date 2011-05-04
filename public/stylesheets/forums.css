@@ -273,10 +273,11 @@ table.posts td.content div.info
     margin: 0.3em 1em 0.5em 0.5em;
 }
 
-table.posts tr.unread td.info
+table.posts tr.unread td.content span.login
 {
     background-image: url(../images/famfamfam/new.gif);
-    background-position: 130px 5px;
+    padding-left: 22px;
+    background-position: 0 2px;
     background-repeat: no-repeat;
 }
 
@@ -300,6 +301,11 @@ table.posts td.content div.body
 }
 
 table.posts td.content div.body span.login
+{
+    display: block;
+}
+
+table.posts td.content div.body span.login a
 {
     font-weight: bold;
 }
