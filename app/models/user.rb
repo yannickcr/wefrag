@@ -198,8 +198,8 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_openid(identity)
-    if match = identity.match(/^http:\/\/forum\.nofrag\.com\/users\/([a-zA-Z0-9_\-]+)$/)
-      find_by_param(match[1])
+    if match = identity.match(/^http:\/\/(forum\.nofrag|www\.wefrag)\.com\/users\/([a-zA-Z0-9_\-]+)$/)
+      find_by_param(match[2])
     else
       nil
     end
