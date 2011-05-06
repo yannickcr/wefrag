@@ -20,7 +20,7 @@ class PostFlowTest < ActionController::IntegrationTest
       assert_response :success
 
       assert_select "tr#post_#{assigns(:topic).id}" do
-        assert_select 'td.info div.user a', "#{user}"
+        assert_select 'td.content span.login a', "#{user}"
         assert_select 'td.content div.body', /how are you today/
       end
     end
