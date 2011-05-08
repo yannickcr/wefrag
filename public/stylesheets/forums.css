@@ -270,7 +270,7 @@ table.posts td.info div.group
 table.posts td.content div.body,
 table.posts td.content div.info
 {
-    margin: 0.3em 1em 0.5em 0.5em;
+    margin: 0.3em 1em 0.5em 0.8em;
 }
 
 table.posts tr.unread td.content div.user
@@ -306,10 +306,6 @@ table.posts td.content div.user
 
 table.posts td.content div.user a
 {
-    background: #eee;
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    padding: 2px 25px 4px 25px;
     font-weight: bold;
 }
 
