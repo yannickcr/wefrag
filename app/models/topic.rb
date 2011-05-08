@@ -125,7 +125,7 @@ class Topic < Post
 
   def last_post
     Rails.cache.fetch cache_key('last_post'), :expires_in => 1.hour do
-      posts.oldest.last || false
+      replies.oldest.last || self || false
     end
   end
 
