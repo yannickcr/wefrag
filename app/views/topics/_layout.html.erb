@@ -1,18 +1,10 @@
 <div class="header span-24">
 <% menu = capture do %>
   <div class="span-14">
-    <% if forum and topic %>
-      <%= breadcrumb forum, topic %>
-    <% else %>
-      <%= breadcrumb %>
-    <% end %>
+    <%= breadcrumb forum, topic %>
   </div>
   <div class="actions span-10 last">
-    <% if forum and topic %>
-      <%= topic_actions forum, topic, current_user %>
-    <% else %>
-      <%= unread_actions current_user %>
-    <% end %>
+    <%= topic_actions forum, topic, current_user %>
   </div>
 <% end %>
 <%= menu %>

@@ -29,7 +29,7 @@ class ForumsTest < ActionController::IntegrationTest
     with_login do
       assert_select 'table.forums tr.unread'
 
-      get_via_redirect "/forums/read_all"
+      get_via_redirect "/forums/unread/read"
       assert_equal '/forums', path
 
       assert_select 'table.forums tr.unread', 0

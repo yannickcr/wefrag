@@ -1,0 +1,40 @@
+<div class="forum">
+
+<div class="header span-24">
+<% menu = capture do %>
+  <div class="span-14">
+    <%= breadcrumb Forum.new(:title => 'Sujets non lus', :stripped_title => 'unread') %>
+  </div>
+  <div class="actions span-10 last">
+    <%= unread_forum_actions current_user %>
+  </div>
+<% end %>
+<%= menu %>
+</div>
+
+<div class="pager span-12 prepend-12">
+  <%= pager = will_paginate @topics %>
+</div>
+
+<div class="span-24">
+<table class="list topics">
+  <tr>
+    <th colspan="3" class="title span-13">Sujet</th>
+    <th class="by span-3">Par</th>
+    <th class="replies span-2">Rép.</th>
+    <th class="last_post span-6 last">Dernier message</th>
+  </tr>
+  <%= render :partial => @topics, :locals => { :forum => nil } %>
+</table>
+</div>
+
+<div class="pager span-12 prepend-12">
+  <%= pager %>
+</div>
+
+<div class="footer span-24">
+<%= menu %>
+</div>
+
+</div>
+

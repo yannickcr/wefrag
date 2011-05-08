@@ -1,5 +1,6 @@
-<% content_tag_for(:tr, post, :class => cycle(:odd, :even) + (action_class == 'unread' ? 'unread' : post_class(topic, post, current_user) ) ) do %>
+<% content_tag_for(:tr, post, :class => cycle(:odd, :even) + post_class(topic, post, current_user)) do %>
   <td class="content span-24 last">
+    <div class="user"><%= user_login post.user %></div>
     <div class="body">
       <% if post.user.login == 'nofrag' %>
 <div style="float: right"><script type="text/javascript">
@@ -14,21 +15,14 @@ sas_target='';                // Targeting
 SmartAdServer(sas_pageid,sas_formatid,sas_target);
 </script></div>
       <% end %>
-      <span class="login"><%= user_login post.user %>:</span>
       <%= format_text post.body %>
     </div>
     <div class="info">
-      <% if action_class == 'unread' %>
-        <div class="actions">
-          <%= link_to 'Topic', to_post_path(post.topic.forum, post.topic, post) %>
-        </div>
-      <% else %>
-        <div class="<%= action_class %>">
-          <%= post_edit forum, topic, post, current_user %>
-        </div>
-      <% end %>
+      <div class="<%= action_class %>">
+        <%= post_edit forum, topic, post, current_user %>
+      </div>
       <div class="date">
-        | <%= link_to post.created_at.strftime('%d/%m/%Y à %Hh%M'), to_post_path(post.topic.forum, post.topic, post) %>
+        | <%= link_to post.created_at.strftime('%d/%m/%Y à %Hh%M'), to_post_path(forum, topic, post) %>
       </div>
     </div>
   </td>

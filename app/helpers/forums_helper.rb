@@ -16,7 +16,7 @@ module ForumsHelper
     end
     html << link_to('Rechercher', new_search_path)
     if user
-      html << link_to('Non lus', '/unread', :class => :read)
+      html << link_to('Non lus', unread_forum_path, :class => :unread)
       html << link_to('Administration', admin_forums_path, :class => :admin) if user.can_admin?
       html << link_to(h(truncate(user.login, :length => 15)), user_path, :class => :user)
     else
@@ -33,15 +33,15 @@ module ForumsHelper
     html << link_to('Weplay', 'http://play.wefrag.com') if forum.is_weplay?
     html.join ' '
   end
-  
-  def unread_actions(user)
+
+  def unread_forum_actions(user)
     html = []
     if user
-      html << link_to('Tout lu', read_all_forums_path, :class => :read)
+      html << link_to('Tout lu', read_unread_forum_path, :class => :read)
     end
     html.join ' '
   end
-  
+
   def breadcrumb(forum = nil, topic = nil, post = nil, text = nil)
     html = [ link_to('Forums', forums_path) ]
     if forum

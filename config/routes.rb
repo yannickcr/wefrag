@@ -19,8 +19,6 @@ ActionController::Routing::Routes.draw do |map|
     my.resources :password,   :except => [:edit, :update, :destroy]
     my.resources :activation, :only   => :show
   end
-  
-  map.connect 'unread', :controller => 'topics', :action => 'unread'
 
   # Search
   map.with_options :controller => 'search', :action => 'new' do |s|
@@ -30,8 +28,13 @@ ActionController::Routing::Routes.draw do |map|
     s.search     'search/:s/:page', :action => 'show', :requirements => { :s => /[^\/]+/, :page => /[1-9]\d*/ }, :defaults => { :page => 1 }
   end
 
+  map.with_options :controller => 'forums' do |forum|
+    forum.unread_forum 'forums/unread/:page', :action => 'unread', :requirements => { :page => /[1-9]\d*/ }, :defaults => { :page => 1 }
+    forum.read_unread_forum 'forums/unread/read', :action => 'read_all'
+  end
+
   # Forum
-  map.resources :forums, :only => [ :index, :show ], :collection => { :read_all => :any }, :member => { :read => :any } do |forum|
+  map.resources :forums, :only => [ :index, :show ], :member => { :read => :any } do |forum|
     forum.resources :topics, :member => { :quote => :get, :stick => :post, :lock => :post, :move => :any, :read => :any, :read_forever => :any } do |topic| 
       topic.resources :posts, :except => [ :index ], :member => { :quote => :get }
     end

@@ -29,8 +29,12 @@ class ForumsRoutingTest < ActionController::TestCase
     assert_routing "/forums/#{@forum.to_param}/read", { :controller => 'forums', :id => @forum.to_param, :action => 'read' }
   end
 
+  test 'route to :unread' do
+    assert_routing "/forums/unread", { :controller => 'forums', :action => 'unread', :page => '1' }
+  end
+
   test 'route to :read_all' do
-    assert_routing "/forums/read_all", { :controller => 'forums', :action => 'read_all' }
+    assert_routing "/forums/unread/read", { :controller => 'forums', :action => 'read_all' }
   end
 
   test 'helper to :home' do
@@ -53,8 +57,12 @@ class ForumsRoutingTest < ActionController::TestCase
     assert_equal "/forums/#{@forum.to_param}/read", read_forum_path(@forum)
   end
 
+  test 'helper to :unread' do
+    assert_equal "/forums/unread", unread_forum_path
+  end
+
   test 'helper to :read_all' do
-    assert_equal "/forums/read_all", read_all_forums_path
+    assert_equal "/forums/unread/read", read_unread_forum_path
   end
 end
 

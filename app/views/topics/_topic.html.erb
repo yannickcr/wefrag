@@ -5,13 +5,13 @@
   <td class="title span-11">
     <div class="title">
       <% if unread = topic.first_unread_by(current_user) %>
-        <%= link_to label = 'Aller aux nouveaux messages', to_post_path(forum, topic, unread), :title => label, :class => :unread_post %>
+        <%= link_to label = 'Aller aux nouveaux messages', to_post_path(forum || topic.forum, topic, unread), :title => label, :class => :unread_post %>
       <% end %>
-      <%= topic_title forum, topic %>
+      <%= topic_title forum || topic.forum, topic %>
     </div>
     <% if topic.pages_count > 1 %>
       <div class="pages">
-        (<%= link_to "#{topic.pages_count} pages", forum_topic_path(forum, topic, :page => topic.pages_count) %>)
+        (<%= link_to "#{topic.pages_count} pages", forum_topic_path(forum || topic.forum, topic, :page => topic.pages_count) %>)
       </div>
     <% end %>
   </td>

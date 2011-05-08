@@ -273,7 +273,7 @@ table.posts td.content div.info
     margin: 0.3em 1em 0.5em 0.5em;
 }
 
-table.posts tr.unread td.content span.login
+table.posts tr.unread td.content div.user
 {
     background-image: url(../images/famfamfam/new.gif);
     padding-left: 22px;
@@ -300,13 +300,16 @@ table.posts td.content div.body
     width: 910px;
 }
 
-table.posts td.content div.body span.login
+table.posts td.content div.user
 {
-    display: block;
 }
 
-table.posts td.content div.body span.login a
+table.posts td.content div.user a
 {
+    background: #eee;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 2px 25px 4px 25px;
     font-weight: bold;
 }
 
@@ -437,6 +440,15 @@ div.header div.actions a.read,
 div.footer div.actions a.read
 {
     background-image: url(../images/famfamfam/eye.png);
+    background-repeat: no-repeat;
+    background-position: 1em 50%;
+    padding-left: 2.75em;
+}
+
+div.header div.actions a.unread,
+div.footer div.actions a.unread
+{
+    background-image: url(../images/famfamfam/new.png);
     background-repeat: no-repeat;
     background-position: 1em 50%;
     padding-left: 2.75em;
