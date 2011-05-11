@@ -4,14 +4,14 @@ set :scm, :git
 set :git_enable_submodules, true
 set :repository, "git@github.com:hc/wefrag.git"
 
-set :branch, "deploy"
+set :branch, "deploy2"
 set :repository_cache, "git_cache"
 set :deploy_via, :remote_cache
 set :ssh_options, { :forward_agent => true }
 
-role :app, "wefrag.com"
-role :web, "wefrag.com"
-role :db,  "wefrag.com", :primary => true
+role :app, "sd-30221.dedibox.fr"
+role :web, "sd-30221.dedibox.fr"
+role :db,  "sd-30221.dedibox.fr", :primary => true
 set :deploy_to, "/home/cedric/#{application}/production"
 
 default_run_options[:pty] = true
